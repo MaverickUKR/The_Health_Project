@@ -1,0 +1,19 @@
+{% schema %}
+{
+  "name": "About Content Section",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "about_text",
+      "label": "Описание",
+      "default": "<p>Our mission is to provide the best health services to the community...</p>"
+    }
+  ]
+}
+{% endschema %}
+
+<section class="about-content">
+  <div class="content-wrapper">
+    {{ section.settings.about_text }}
+  </div>
+</section>

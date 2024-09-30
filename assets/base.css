@@ -3595,3 +3595,32 @@ details-disclosure > details {
     transform: translateX(100%) scaleX(0);
   }
 }
+
+/* Test styles */
+
+.about-hero {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 500px;
+  background-size: cover;
+  background-position: center;
+  color: #fff;
+  text-align: center;
+}
+
+.about-hero .hero-content h1 {
+  font-size: 3rem;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.about-content {
+  padding: 50px;
+  background-color: #f8f9fa;
+}
+
+.about-content .content-wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+  font-size: 1.2rem;
+}
