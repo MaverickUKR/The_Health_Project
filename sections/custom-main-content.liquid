@@ -1,0 +1,22 @@
+<!-- Начало кода секции -->
+{% schema %}
+{
+  "name": "Custom Main Content",
+  "settings": [
+    {
+      "type": "text",
+      "id": "custom_text",
+      "label": "Custom Text",
+      "default": "Welcome to the custom page!"
+    }
+  ]
+}
+{% endschema %}
+
+<div class="custom-main-content">
+  <h1>{{ page.title }}</h1>
+  <p>{{ section.settings.custom_text }}</p>
+  <div class="page-content">
+    {{ page.content }}
+  </div>
+</div>
