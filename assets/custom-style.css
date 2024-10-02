@@ -1,0 +1,45 @@
+.header-wrapper {
+  display: flex;                   /* Flexbox для горизонтальной раскладки */
+  justify-content: space-around;  /* Пространство между логотипом и меню */
+  align-items: center;             /* Центрирование по вертикали */
+  padding: 20px;                   /* Внутренние отступы */
+  background-color: #fff;       /* Фон хедера */
+}
+
+.header__logo img {
+  width: 173px;                    /* Ширина логотипа */
+  height: 40px;                    /* Высота логотипа */
+}
+
+.header__menu {
+  display: flex;                   /* Flexbox для горизонтальной раскладки элементов меню */
+  gap: 15px;                       /* Промежуток между пунктами меню */
+}
+
+.header__menu-item {
+  text-decoration: none;           /* Убираем подчеркивание ссылок */
+  color: #808080;                  /* Цвет текста */
+  font-family: 'Karla', sans-serif;/* Шрифт Karla */
+  font-size: 15px;                 /* Размер текста */
+  font-weight: 400;                /* Толщина шрифта */
+  line-height: 24px;               /* Межстрочный интервал */
+  padding: 5px 10px;               /* Внутренние отступы для элементов меню */
+}
+
+.header__menu-item:hover {
+  color: #42ABDE;             /* Цвет фона при наведении */
+  border-radius: 5px;              /* Скругленные углы */
+}
+
+.header__logo {
+  margin-right: 20px;              /* Отступ справа от логотипа */
+}
+
+.header__button {
+  width: 152px;
+  height: 49px;
+  background-color: #42ABDE;
+  color: #fff;
+  border: none;
+  border-radius: 100px;
+}

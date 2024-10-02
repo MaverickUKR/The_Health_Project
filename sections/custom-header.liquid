@@ -1,4 +1,29 @@
-<link rel="stylesheet" href="{{ 'section-custom-header.css' | asset_url }}">
+<link rel="stylesheet" href="{{ 'custom-style.css' | asset_url }}">
+
+<header class="site-header">
+  <div class="header-wrapper">
+    <!-- Логотип -->
+    <div class="header__logo">
+      <a href="{{ shop.url }}">
+        <img src="{{ 'Logo.png' | asset_url }}" width="173px" height="40px" alt="{{ shop.name }}">
+      </a>
+    </div>
+
+    <!-- Меню навигации -->
+    <nav class="header__menu">
+      {% if linklists["main-menu"].links.size > 0 %}
+        {% for link in linklists["main-menu"].links %}
+          <a href="{{ link.url }}" class="header__menu-item">{{ link.title }}</a>
+        {% endfor %}
+      {% else %}
+        <p>Menu is not set up. Please create and configure the menu in the Shopify Admin</p>
+      {% endif %}
+    </nav>
+    <button class="header__button">Visit market</button>
+  </div>
+</header>
+
+{% comment %} <link rel="stylesheet" href="{{ 'section-custom-header.css' | asset_url }}">
 
 <header class="site-header">
     <div class="header-wrapper">
@@ -18,4 +43,4 @@
     {% endif %}
    </nav>
    </div>
-  </header>
+  </header> {% endcomment %}
