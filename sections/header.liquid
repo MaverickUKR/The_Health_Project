@@ -1,4 +1,23 @@
-<link rel="stylesheet" href="{{ 'component-list-menu.css' | asset_url }}" media="print" onload="this.media='all'">
+<header class="site-header">
+  <div class="header-wrapper">
+    <div class="header__logo">
+      <a href="{{ shop.url }}">
+        <img src="{{ 'Logo.png' | asset_url }}" width="173px" height="40px" alt="{{ shop.name }}">
+      </a>
+    </div>
+
+    <nav class="header__menu">
+  {% if linklists["main-menu"].links.size > 0 %}
+    {% for link in linklists["main-menu"].links %}
+      <a href="{{ link.url }}" class="header__menu-item">{{ link.title }}</a>
+    {% endfor %}
+    {% else %}
+    <p>Menu is not set up. Please create and configure the menu in the Shopify Admin</p>
+  {% endif %}
+ </nav>
+ </div>
+</header>
+{% comment %} <link rel="stylesheet" href="{{ 'component-list-menu.css' | asset_url }}" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="{{ 'component-search.css' | asset_url }}" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="{{ 'component-menu-drawer.css' | asset_url }}" media="print" onload="this.media='all'">
 <link rel="stylesheet" href="{{ 'component-cart-notification.css' | asset_url }}" media="print" onload="this.media='all'">
@@ -641,4 +660,4 @@
     }
   ]
 }
-{% endschema %}
+{% endschema %} {% endcomment %}
