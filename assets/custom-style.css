@@ -7,6 +7,52 @@
   background-color: #fff;       /* Фон хедера */
 }
 
+/* Стили для позиции логотипа */
+.header--top-left .header__logo {
+  order: 1; /* Логотип слева */
+}
+
+.header--top-center .header__logo {
+  order: 2; /* Логотип в центре */
+  margin: 0 auto;
+}
+
+.header--middle-left .header__logo {
+  order: 1;
+  align-self: center; /* Логотип по вертикали в центре */
+}
+
+.header--middle-center .header__logo {
+  order: 2;
+  margin: 0 auto;
+  align-self: center;
+}
+
+/* Стили для типа меню */
+.header--menu-type-dropdown .header__menu {
+  display: block;
+}
+
+.header--menu-type-mega .header__menu {
+  display: flex;
+  justify-content: center;
+}
+
+.header--menu-type-drawer .header__menu {
+  display: none; /* Для мобильных устройств — меню в drawer */
+}
+
+/* Цветовые схемы */
+.header--color-scheme-scheme-1 {
+  background-color: #fff;
+  color: #333;
+}
+
+.header--color-scheme-scheme-2 {
+  background-color: #000;
+  color: #fff;
+}
+
 .header__logo img {
   width: 173px;                    /* Ширина логотипа */
   height: 40px;                    /* Высота логотипа */
