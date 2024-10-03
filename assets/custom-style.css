@@ -1,46 +1,45 @@
 /* assets/custom-style.css */
+/* Стили для хедера */
 .header-wrapper {
-  display: flex;                   /* Flexbox для горизонтальной раскладки */
-  justify-content: space-around;  /* Пространство между логотипом и меню */
-  align-items: center;             /* Центрирование по вертикали */
-  padding: 20px;                   /* Внутренние отступы */
-  background-color: #fff;       /* Фон хедера */
+  display: grid;
+  grid-template-rows: auto; /* Одна строка */
+  grid-template-areas: "logo menu button"; /* Стандартное расположение */
+  align-items: center;
+  padding: 20px;
+  background-color: #fff;
+  justify-content: space-around;
 }
 
-/* Стили для позиции логотипа */
-.header--top-left .header__logo {
-  order: 1; /* Логотип слева */
+/* Области для разных позиций логотипа */
+.header--left .header-wrapper {
+  grid-template-areas: "logo menu button";
 }
 
-.header--top-center .header__logo {
-  order: 2; /* Логотип в центре */
-  margin: 0 auto;
+.header--top-left .header-wrapper {
+  grid-template-areas: 
+  "logo logo"
+  "menu button"; /* Меню и кнопка занимают вторую строку */
+justify-content: space-between; /* Кнопка прижимается к правому краю */
 }
 
-.header--middle-left .header__logo {
-  order: 1;
-  align-self: center; /* Логотип по вертикали в центре */
+.header--right .header-wrapper {
+  grid-template-areas: "button menu logo"; /* Меню и кнопка меняются местами */
+  justify-content: space-around; /* Равномерное распределение */
 }
 
-.header--middle-center .header__logo {
-  order: 2;
-  margin: 0 auto;
-  align-self: center;
-}
-
-/* Стили для типа меню */
-.header--menu-type-dropdown .header__menu {
+/* Стили для типа меню
+.header--menu-type-dropdown {
   display: block;
 }
 
-.header--menu-type-mega .header__menu {
+.header--menu-type-mega {
   display: flex;
   justify-content: center;
 }
 
 .header--menu-type-drawer .header__menu {
-  display: none; /* Для мобильных устройств — меню в drawer */
-}
+  display: none; /* Для мобильных устройств — меню в drawer
+} */
 
 /* Цветовые схемы */
 .header--color-scheme-scheme-1 {
@@ -53,22 +52,36 @@
   color: #fff;
 }
 
+.header__logo {
+  grid-area: logo; /* Область логотипа */
+}
+
 .header__logo img {
   width: 173px;                    /* Ширина логотипа */
   height: 40px;                    /* Высота логотипа */
 }
 
+.header__burger {
+  display: none;
+  grid-area: burger;
+  cursor: pointer;
+  font-size: 28px;
+  color: #42ABDE;
+}
+
 .header__menu {
-  display: flex;                   /* Flexbox для горизонтальной раскладки элементов меню */
-  gap: 15px;                       /* Промежуток между пунктами меню */
-  align-items: center;
-  height: 24px;
+  grid-area: menu;
+  justify-self: center;
+  display: flex;
+  justify-content: center;
+  margin-left: -10px;
+  gap: 20px;
 }
 
 .header__menu-item {
   text-decoration: none;           /* Убираем подчеркивание ссылок */
   color: #808080;                  /* Цвет текста */
-  font-family: 'Karla', sans-serif;/* Шрифт Karla */
+  font-family: 'Karla', sans-serif; /* Шрифт Karla */
   font-size: 15px;                 /* Размер текста */
   font-weight: 400;                /* Толщина шрифта */
   line-height: 24px;               /* Межстрочный интервал */
@@ -80,11 +93,13 @@
   border-radius: 5px;              /* Скругленные углы */
 }
 
-.header__logo {
-  margin-right: 20px;              /* Отступ справа от логотипа */
+.header__mobile-menu {
+  display: none;
 }
 
 .header__button {
+  grid-area: button;
+  justify-self: end;
   width: 152px;
   height: 49px;
   background-color: #42ABDE;
@@ -93,3 +108,198 @@
   border-radius: 100px;
   cursor: pointer;
 }
+
+/* Мобильные стили */
+@media screen and (max-width: 768px) {
+  .header--left .header-wrapper {
+    grid-template-areas: "logo burger";
+    grid-template-rows: auto;
+    justify-content: space-between;
+  }
+
+  .header__button {
+    display: none;
+  }
+  
+  .header__menu {
+    display: none;
+  }
+  
+  .header__burger {
+    display: block;
+  }
+
+  .header__mobile-menu {
+    display: none;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    z-index: 10;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 60px 20px;
+  }
+
+  .header__mobile-menu.show {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    z-index: 10;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 60px 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Тень для меню */
+  }
+  
+  .header__mobile-menu > div:first-child {
+    align-self: flex-end; /* Иконка закрытия справа */
+    margin-right: 20px;
+    margin-top: 20px;
+    cursor: pointer;
+    font-size: 24px;
+  }
+
+
+  .header__mobile-menu .mobile-nav {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  text-align: center;
+  margin-top: 30px; /* Отступ сверху для меню */
+}
+
+.header__mobile-menu .mobile-nav .header__menu-item {
+  display: flex;
+  justify-content: space-between; /* Для оформления с номерами */
+  align-items: center;
+  padding: 15px 0;
+  text-align: center;
+  font-size: 18px;
+  color: #333;
+  text-decoration: none;
+  font-family: 'Karla', sans-serif;
+  border-bottom: 1px solid #f0f0f0; /* Разделитель между элементами */
+  position: relative;
+}
+
+.header__mobile-menu .mobile-nav .header__menu-item:hover {
+  color: #42ABDE; /* Цвет текста при наведении */
+}
+
+.header__mobile-menu .mobile-nav .header__menu-item::before {
+  content: attr(data-index); /* Использование атрибута data-index для номеров */
+  position: absolute;
+  left: 0; /* Номера слева */
+  font-size: 14px;
+  color: #bbb; /* Цвет для номеров */
+}
+.header__mobile-menu .header__button {
+  margin-top: auto;
+  width: 80%;
+  height: 50px;
+  background-color: #42ABDE;
+  color: #fff;
+  text-align: center;
+  font-size: 18px;
+  line-height: 50px; /* Вертикальное центрирование текста */
+  border-radius: 25px;
+  cursor: pointer;
+}
+}
+
+/* Основные стили для хедера */
+/* .header-wrapper {
+  display: grid;
+  grid-template-areas: "logo menu button";
+  align-items: center;
+  padding: 20px;
+  background-color: #fff;
+  justify-content: space-around;
+}
+
+.header__logo {
+  grid-area: logo;
+}
+
+.header__burger {
+  display: none;
+  cursor: pointer;
+  font-size: 28px;
+  color: #42ABDE;
+}
+
+.header__menu {
+  grid-area: menu;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.header__button {
+  grid-area: button;
+  justify-self: end;
+  width: 152px;
+  height: 49px;
+  background-color: #42ABDE;
+  color: #fff;
+  border: none;
+  border-radius: 100px;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+  .header-wrapper {
+    grid-template-areas: "logo burger";
+    grid-template-columns: auto 1fr;
+  }
+
+  .header__menu,
+  .header__button {
+    display: none;
+  }
+
+  .header__burger {
+    display: block;
+  }
+
+  .header__mobile-menu {
+    display: none;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    z-index: 10;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 60px 20px;
+  }
+
+  .header__mobile-menu.show {
+    display: flex;
+  }
+
+  .mobile-nav .header__menu-item {
+    padding: 15px 0;
+    text-align: center;
+    font-size: 18px;
+  }
+
+  .header__mobile-menu .header__button {
+    margin-top: auto;
+    width: 80%;
+    text-align: center;
+  }
+}
+*/
