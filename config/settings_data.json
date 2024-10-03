@@ -136,7 +136,7 @@
       "custom-header": {
         "type": "custom-header",
         "settings": {
-          "button_text": "Visit Shop",
+          "button_text": "Visit Market",
           "show_button": true,
           "logo_position": "middle-center",
           "menu": "main-menu",
