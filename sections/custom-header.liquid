@@ -1,3 +1,4 @@
+{% comment %} sections/custom-header.liquid {% endcomment %}
 <link rel="stylesheet" href="{{ 'custom-style.css' | asset_url }}">
 
 <header class="site-header">
@@ -22,6 +23,137 @@
     <button class="header__button">Visit market</button>
   </div>
 </header>
+
+{% schema %}
+{
+  "name": "Custom Header",
+  "settings": [
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Visit Market"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_button",
+      "label": "Show Button",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "logo_position",
+      "label": "Desktop Logo Position",
+      "default": "middle-left",
+      "options": [
+        { "value": "top-left", "label": "Top Left" },
+        { "value": "top-center", "label": "Top Center" },
+        { "value": "middle-left", "label": "Middle Left" },
+        { "value": "middle-center", "label": "Middle Center" }
+      ]
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "select",
+      "id": "menu_type_desktop",
+      "label": "Desktop Menu Type",
+      "default": "dropdown",
+      "options": [
+        { "value": "dropdown", "label": "Dropdown" },
+        { "value": "mega", "label": "Mega Menu" },
+        { "value": "drawer", "label": "Drawer" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "sticky_header_type",
+      "label": "Sticky Header",
+      "default": "on-scroll-up",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "on-scroll-up", "label": "On Scroll Up" },
+        { "value": "always", "label": "Always Sticky" },
+        { "value": "reduce-logo-size", "label": "Reduce Logo Size" }
+      ]
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Header Color Scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "color_scheme",
+      "id": "menu_color_scheme",
+      "label": "Menu Color Scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "mobile_logo_position",
+      "label": "Mobile Logo Position",
+      "default": "center",
+      "options": [
+        { "value": "center", "label": "Center" },
+        { "value": "left", "label": "Left" }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "label": "Bottom Margin",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "default": 0,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top Padding",
+      "min": 0,
+      "max": 36,
+      "step": 4,
+      "default": 20,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom Padding",
+      "min": 0,
+      "max": 36,
+      "step": 4,
+      "default": 20,
+      "unit": "px"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_country_selector",
+      "label": "Enable Country Selector",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_language_selector",
+      "label": "Enable Language Selector",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_line_separator",
+      "label": "Show Line Separator",
+      "default": true
+    }
+  ]
+}
+{% endschema %}
 
 {% comment %} <link rel="stylesheet" href="{{ 'section-custom-header.css' | asset_url }}">
 

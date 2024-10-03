@@ -1,3 +1,4 @@
+/* assets/custom-style.css */
 .header-wrapper {
   display: flex;                   /* Flexbox для горизонтальной раскладки */
   justify-content: space-around;  /* Пространство между логотипом и меню */
@@ -14,6 +15,8 @@
 .header__menu {
   display: flex;                   /* Flexbox для горизонтальной раскладки элементов меню */
   gap: 15px;                       /* Промежуток между пунктами меню */
+  align-items: center;
+  height: 24px;
 }
 
 .header__menu-item {
@@ -42,4 +45,5 @@
   color: #fff;
   border: none;
   border-radius: 100px;
+  cursor: pointer;
 }
