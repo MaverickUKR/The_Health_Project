@@ -223,7 +223,7 @@ justify-content: space-between; /* Кнопка прижимается к пра
     right: 22px;
   }
   
-  .header__mobile-menu .mobile-nav .header__menu-item {
+  .shopify header__mobile-menu .mobile-nav .header__menu-item {
     padding: 23px 0 46px 0; /* Убираем отступы */
   }
   .header__mobile-menu .mobile-nav .header__menu-item .menu-item-index {
