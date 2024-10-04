@@ -9,12 +9,16 @@
     <!-- Логотип -->
     <div class="header__logo">
       <a href="{{ shop.url }}">
-        <img src="{{ 'Logo.png' | asset_url }}" width="173px" height="40px" alt="{{ shop.name }}">
+        {% if section.settings.logo_image != blank %}
+          <img src="{{ section.settings.logo_image | image_url: width: 173 }}" width="173px" height="40px" alt="{{ shop.name }}">
+        {% else %}
+          <img src="{{ 'Logo.png' | asset_url }}" width="173px" height="40px" alt="{{ shop.name }}">
+        {% endif %}
       </a>
     </div>
 
     <!-- Универсальное меню -->
-    <nav class="header__menu">
+    <nav class="header__menu header__menu--desktop">
       {% if linklists[section.settings.menu].links.size > 0 %}
         {% for link in linklists[section.settings.menu].links %}
           <a href="{{ link.url }}" class="header__menu-item">{{ link.title }}</a>
@@ -30,13 +34,11 @@
     {% endif %}
 
     <!-- Бургер-меню для мобильной версии -->
-    <div class="header__burger" onclick="toggleMobileMenu()">☰</div>
+    <div class="header__burger" id="burgerMenu" onclick="toggleMobileMenu()">☰</div>
   </div>
   
   <!-- Мобильное меню -->
-  <div class="header__mobile-menu">
-    <!-- Закрывающая иконка -->
-    <div>✕</div>
+  <div class="header__mobile-menu" id="mobileMenu">
 
     <!-- Пункты меню и кнопка в мобильной версии -->
     <div class="mobile-nav">
@@ -60,44 +62,42 @@
 
 <script>
   function toggleMobileMenu() {
-    const menu = document.querySelector('.header__mobile-menu');
+    const menu = document.getElementById('mobileMenu');
+    const burger = document.getElementById('burgerMenu');
+    
+    // Переключаем видимость меню
     menu.classList.toggle('show');
+
+    // Изменяем иконку бургер-меню на закрывающую кнопку и наоборот
+    if (menu.classList.contains('show')) {
+      burger.innerHTML = '✕';
+    } else {
+      burger.innerHTML = '☰';
+    }
   }
 </script>
-
-
-{% comment %} <header class="site-header">
-  <div class="header-wrapper">
-    <!-- Логотип -->
-    <div class="header__logo">
-      <a href="{{ shop.url }}">
-        <img src="{{ 'Logo.png' | asset_url }}" width="173px" height="40px" alt="{{ shop.name }}">
-      </a>
-    </div>
-
-    <!-- Меню навигации -->
-    <nav class="header__menu">
-      {% if linklists["main-menu"].links.size > 0 %}
-        {% for link in linklists["main-menu"].links %}
-          <a href="{{ link.url }}" class="header__menu-item">{{ link.title }}</a>
-        {% endfor %}
-      {% else %}
-        <p>Menu is not set up. Please create and configure the menu in the Shopify Admin</p>
-      {% endif %}
-    </nav>
-    <button class="header__button">Visit market</button>
-  </div>
-</header> {% endcomment %}
 
 {% schema %}
 {
   "name": "Custom Header",
   "settings": [
     {
+      "type": "image_picker",
+      "id": "logo_image",
+      "label": "Logo Image",
+      "info": "Upload or select a custom logo image."
+    },
+    {
       "type": "text",
       "id": "button_text",
       "label": "Button Text",
       "default": "Visit Market"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link",
+      "default": "/"
     },
     {
       "type": "checkbox",
@@ -121,99 +121,6 @@
       "id": "menu",
       "label": "Menu",
       "default": "main-menu"
-    },
-    {
-      "type": "select",
-      "id": "menu_type_desktop",
-      "label": "Desktop Menu Type",
-      "default": "dropdown",
-      "options": [
-        { "value": "dropdown", "label": "Dropdown" },
-        { "value": "mega", "label": "Mega Menu" },
-        { "value": "drawer", "label": "Drawer" }
-      ]
-    },
-    {
-      "type": "select",
-      "id": "sticky_header_type",
-      "label": "Sticky Header",
-      "default": "on-scroll-up",
-      "options": [
-        { "value": "none", "label": "None" },
-        { "value": "on-scroll-up", "label": "On Scroll Up" },
-        { "value": "always", "label": "Always Sticky" },
-        { "value": "reduce-logo-size", "label": "Reduce Logo Size" }
-      ]
-    },
-    {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "Header Color Scheme",
-      "default": "scheme-1"
-    },
-    {
-      "type": "color_scheme",
-      "id": "menu_color_scheme",
-      "label": "Menu Color Scheme",
-      "default": "scheme-1"
-    },
-    {
-      "type": "select",
-      "id": "mobile_logo_position",
-      "label": "Mobile Logo Position",
-      "default": "center",
-      "options": [
-        { "value": "center", "label": "Center" },
-        { "value": "left", "label": "Left" }
-      ]
-    },
-    {
-      "type": "range",
-      "id": "margin_bottom",
-      "label": "Bottom Margin",
-      "min": 0,
-      "max": 100,
-      "step": 4,
-      "default": 0,
-      "unit": "px"
-    },
-    {
-      "type": "range",
-      "id": "padding_top",
-      "label": "Top Padding",
-      "min": 0,
-      "max": 36,
-      "step": 4,
-      "default": 20,
-      "unit": "px"
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom",
-      "label": "Bottom Padding",
-      "min": 0,
-      "max": 36,
-      "step": 4,
-      "default": 20,
-      "unit": "px"
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_country_selector",
-      "label": "Enable Country Selector",
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_language_selector",
-      "label": "Enable Language Selector",
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "show_line_separator",
-      "label": "Show Line Separator",
-      "default": true
     }
   ]
 }
