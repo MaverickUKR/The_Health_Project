@@ -1,0 +1,159 @@
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section Title",
+      "default": "Our Products"
+    },
+    {
+      "type": "range",
+      "id": "slider_speed",
+      "label": "Slider Speed",
+      "default": 3000,
+      "min": 1000,
+      "max": 9500,
+      "step": 500,
+      "unit": "ms"
+    },
+    {
+      "type": "checkbox",
+      "id": "loop_slides",
+      "label": "Loop Slides",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "slide_image",
+          "label": "Slide Image"
+        },
+        {
+          "type": "text",
+          "id": "slide_title",
+          "label": "Slide Title",
+          "default": "Ultimate Creatine 250g"
+        },
+        {
+          "type": "text",
+          "id": "slide_subtitle",
+          "label": "Slide Subtitle",
+          "default": "The Health Project"
+        },
+        {
+          "type": "text",
+          "id": "slide_button_text",
+          "label": "Button Text",
+          "default": "Buy now"
+        },
+        {
+          "type": "url",
+          "id": "slide_button_link",
+          "label": "Button Link",
+          "default": "/"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero",
+      "category": "Custom Sections"
+    }
+  ]
+}
+{% endschema %}
+
+<div class="hero-slider">
+  <div class="swiper-container">
+    <div class="swiper-wrapper">
+      {% for block in section.blocks %}
+        <div class="swiper-slide">
+          <div class="slide-content" style="background-image: url({{ block.settings.slide_image | image_url }});">
+            <div class="slide-text">
+              <h2>{{ block.settings.slide_title }}</h2>
+              <p>{{ block.settings.slide_subtitle }}</p>
+              {% if block.settings.slide_button_text %}
+                <a href="{{ block.settings.slide_button_link }}" class="slide-button">
+                  {{ block.settings.slide_button_text }}
+                </a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    <!-- Добавление кнопок навигации -->
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const swiper = new Swiper('.swiper-container', {
+      loop: {{ section.settings.loop_slides | json }},
+      speed: {{ section.settings.slider_speed }},
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      }
+    });
+  });
+</script>
+
+<style>
+.hero-slider {
+  position: relative;
+  max-width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.swiper-container {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-size: cover;
+  background-position: center;
+}
+
+.slide-content {
+  text-align: center;
+  color: #fff;
+  padding: 20px;
+}
+
+.slide-content h2 {
+  font-size: 48px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.slide-content p {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.slide-button {
+  display: inline-block;
+  padding: 15px 30px;
+  background: #42ABDE;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 50px;
+  font-size: 18px;
+}
+</style>

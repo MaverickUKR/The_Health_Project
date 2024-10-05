@@ -8,14 +8,14 @@
       <title>{{ page_title }}</title>
       {{ content_for_header }}
       <!-- Swiper CSS -->
-     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+      <link rel="stylesheet" href="{{ 'swiper-bundle.min.css' | asset_url }}">
      <!-- Swiper JS -->
      <script defer src="{{ 'swiper-bundle.min.js' | asset_url }}"></script>
     </head>
     <body>
       <!-- Включение кастомного хедера -->
       {% section 'custom-header' %}
-    
+      {% section 'custom-hero' %}
       <!-- Основной контент страницы -->
       <main class="main-content">
         {{ content_for_layout }}

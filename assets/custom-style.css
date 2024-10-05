@@ -86,10 +86,12 @@ justify-content: space-between; /* Кнопка прижимается к пра
 
 /* Таблет стили */
 @media screen and (max-width: 768px) {
-  .header--left .header-wrapper {
+  .header--left .header-wrapper, .header--top-left .header-wrapper, .header--right .header-wrapper {
     grid-template-areas: "logo burger";
     grid-template-rows: auto;
     justify-content: space-between;
+    margin-left: 42px;
+    margin-right: 42px;
   }
 
   .header__logo img {
@@ -194,9 +196,7 @@ justify-content: space-between; /* Кнопка прижимается к пра
   /* Стили для кнопки в мобильном меню */
 /* Кнопка в мобильном меню */
 .header__mobile-menu .header__button {
-  /* margin-top: auto; */
   display: block;
-  /* width: 100%; */
   height: 49px;
   background-color: #42ABDE;
   color: #fff;
@@ -218,9 +218,19 @@ justify-content: space-between; /* Кнопка прижимается к пра
 
 /* Мобильные стили */
 @media screen and (max-width: 428px) {
+  .header--left .header-wrapper, .header--top-left .header-wrapper, .header--right .header-wrapper {
+    grid-template-areas: "logo burger";
+    grid-template-rows: auto;
+    justify-content: space-between;
+    margin-left: 2px;
+    margin-right: 2px;
+  }
+
   .header__mobile-menu .header__button {
     left: 22px;
     right: 22px;
+    cursor: pointer;
+    padding: 0;
   }
   
   .shopify header__mobile-menu .mobile-nav .header__menu-item {
@@ -234,3 +244,4 @@ justify-content: space-between; /* Кнопка прижимается к пра
     color: #808080;
   }
 }
+
