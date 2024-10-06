@@ -78,8 +78,8 @@
         <div class="swiper-slide">
           <div class="slide-content" style="background-image: url({{ block.settings.slide_image | image_url }});">
             <div class="slide-text">
-              <h2>{{ block.settings.slide_title }}</h2>
-              <p>{{ block.settings.slide_subtitle }}</p>
+              <h2>{{ block.settings.slide_title | upcase }}</h2>
+              <p>{{ block.settings.slide_subtitle | upcase }}</p>
               {% if block.settings.slide_button_text %}
                 <a href="{{ block.settings.slide_button_link }}" class="slide-button">
                   {{ block.settings.slide_button_text }}
@@ -90,9 +90,15 @@
         </div>
       {% endfor %}
     </div>
-    <!-- Добавление кнопок навигации -->
-    <div class="swiper-button-next"></div>
-    <div class="swiper-button-prev"></div>
+    <!-- Кнопки навигации -->
+    <div class="custom-swiper-navigation">
+      <div class="swiper-button-prev custom-swiper-button">
+        <div class="arrow-left"></div>
+      </div>
+      <div class="swiper-button-next custom-swiper-button">
+        <div class="arrow-right"></div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -113,9 +119,7 @@
 .hero-slider {
   position: relative;
   margin-top: 78px;
-  margin-left: 255px;
   max-width: 100%;
-  {% comment %} height: 100vh; {% endcomment %}
   overflow: hidden;
 }
 
@@ -133,11 +137,10 @@
   display: block;
   align-content: center;
   color: #fff;
-  {% comment %} padding: 20px; {% endcomment %}
   background-repeat: no-repeat;
   width: 1100px;
   height: 861px;
-  margin-left: 410px
+  margin: 0 auto;
 }
 
 .slide-text {
@@ -170,5 +173,56 @@
   text-decoration: none;
   border-radius: 50px;
   font-size: 18px;
+}
+
+/* Стили для навигационных стрелок */
+.custom-swiper-navigation {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  position: absolute;
+  bottom: -50px; /* Расположение стрелок под слайдером */
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.custom-swiper-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  background: #ffffff;
+  border: 2px solid #42ABDE;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.3s, border-color 0.3s;
+}
+
+.custom-swiper-button:hover {
+  background: #42ABDE; /* Изменение цвета фона при наведении */
+}
+
+.custom-swiper-button:hover .arrow-right,
+.custom-swiper-button:hover .arrow-left {
+  border-color: #fff; /* Изменение цвета стрелок при наведении */
+}
+
+/* Стили стрелок */
+.arrow-right,
+.arrow-left {
+  display: block;
+  width: 16px;
+  height: 16px;
+  border: solid #42ABDE;
+  border-width: 0 4px 4px 0;
+}
+
+.arrow-right {
+  transform: rotate(-45deg); /* Поворот стрелки вправо */
+}
+
+.arrow-left {
+  transform: rotate(135deg); /* Поворот стрелки влево */
 }
 </style>
