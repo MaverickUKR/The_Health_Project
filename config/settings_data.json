@@ -155,10 +155,43 @@
               "slide_button_text": "Buy now",
               "slide_button_link": "#"
             }
+          },
+          "slide_Ln9eQk": {
+            "type": "slide",
+            "settings": {
+              "slide_image": "shopify://shop_images/Creatine_caps_1_1.png",
+              "slide_title": "Ultimate Creatine 251g",
+              "slide_subtitle": "The Health Project1",
+              "slide_button_text": "Buy now .",
+              "slide_button_link": "/"
+            }
+          },
+          "slide_TjMXdn": {
+            "type": "slide",
+            "settings": {
+              "slide_image": "shopify://shop_images/Creatine_caps_1_1.png",
+              "slide_title": "Ultimate Creatine 252g",
+              "slide_subtitle": "The Health Project2",
+              "slide_button_text": "Buy now ..",
+              "slide_button_link": "/"
+            }
+          },
+          "slide_LkhTnN": {
+            "type": "slide",
+            "settings": {
+              "slide_image": "shopify://shop_images/Creatine_caps_1_1.png",
+              "slide_title": "Ultimate Creatine 253g",
+              "slide_subtitle": "The Health Project3",
+              "slide_button_text": "Buy now ...",
+              "slide_button_link": "/"
+            }
           }
         },
         "block_order": [
-          "slide_m7UhrY"
+          "slide_m7UhrY",
+          "slide_Ln9eQk",
+          "slide_TjMXdn",
+          "slide_LkhTnN"
         ],
         "settings": {
           "section_title": "Our Products",
