@@ -60,6 +60,30 @@
           "default": "/"
         }
       ]
+    },
+    {
+      "type": "text_line_top",
+      "name": "Top Background Text",
+      "settings": [
+        {
+          "type": "text",
+          "id": "top_text",
+          "label": "Top Line Text",
+          "default": "THE HEALTH"
+        }
+      ]
+    },
+    {
+      "type": "text_line_bottom",
+      "name": "Bottom Background Text",
+      "settings": [
+        {
+          "type": "text",
+          "id": "bottom_text",
+          "label": "Bottom Line Text",
+          "default": "PROJECT"
+        }
+      ]
     }
   ],
   "presets": [
@@ -73,6 +97,62 @@
 
 <div class="hero-slider">
   <div class="swiper-container">
+    <!-- Динамический фоновой текст настраивается через блоки -->
+    {% comment %} <div class="hero-background">
+      <div class="hero-background__text hero-background__text--top">
+        {% for block in section.blocks %}
+          {% if block.type == 'text_line_top' %}
+            <span>Debug top: {{ block }}</span>
+            {% if block.settings.top_text %}
+              {% for i in (1..8) %}
+                <span>{{ block.settings.top_text }}</span>
+              {% endfor %}
+            {% else %}
+              <span>No top_text found</span>
+            {% endif %}
+          {% endif %}
+        {% endfor %}
+      </div>
+    
+      <div class="hero-background__text hero-background__text--bottom">
+        {% for block in section.blocks %}
+          <span>Block id: {{ block.id }}</span>
+          <span>Block settings: {{ block.settings }}</span>
+          {% if block.type == 'text_line_bottom' %}
+            <span>Debug bottom: {{ block }}</span>
+            {% if block.settings.bottom_text %}
+              {% for i in (1..8) %}
+                <span>{{ block.settings.bottom_text }}</span>
+              {% endfor %}
+            {% else %}
+              <span>No bottom_text found</span>
+            {% endif %}
+          {% endif %}
+        {% endfor %}        
+      </div>
+    </div> {% endcomment %}
+    
+    
+    <div class="hero-background">
+      <div class="hero-background__text hero-background__text--top">
+        <span>THE HEALTH</span>
+        <span>THE HEALTH</span>
+        <span>THE HEALTH</span>
+        <span>THE HEALTH</span>
+        <span>THE HEALTH</span>
+        <span>THE HEALTH</span>
+      </div>
+      <div class="hero-background__text hero-background__text--bottom">
+        <span>PROJECT</span>
+        <span>PROJECT</span>
+        <span>PROJECT</span>
+        <span>PROJECT</span>
+        <span>PROJECT</span>
+        <span>PROJECT</span>
+      </div>
+    </div>
+    
+     
     <div class="swiper-wrapper">
       {% for block in section.blocks %}
         <div class="swiper-slide">
@@ -86,18 +166,24 @@
                 </a>
               {% endif %}
             </div>
+             <!-- Кнопки навигации со встроенными SVG -->
+            <div class="custom-swiper-navigation">
+              <div class="custom-swiper-button custom-swiper-button-prev">
+                <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="30" cy="30" r="29.5" transform="matrix(-1 0 0 1 60 0)" stroke="#DDDDDD"/>
+                  <path d="M38.4853 29.9139H21.5147M21.5147 29.9139L27.1716 24.257M21.5147 29.9139L27.1716 35.5707" stroke="#42ABDE" stroke-width="1.5"/>
+                </svg>
+              </div>
+              <div class="custom-swiper-button custom-swiper-button-next">
+                <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="30" cy="30" r="29.5" stroke="#DDDDDD"/>
+                  <path d="M21.5147 29.9139H38.4853M38.4853 29.9139L32.8284 24.257M38.4853 29.9139L32.8284 35.5707" stroke="#42ABDE" stroke-width="1.5"/>
+                </svg>
+              </div>
+            </div>
           </div>
         </div>
       {% endfor %}
-    </div>
-    <!-- Кнопки навигации -->
-    <div class="custom-swiper-navigation">
-      <div class="swiper-button-prev custom-swiper-button">
-        <div class="arrow-left"></div>
-      </div>
-      <div class="swiper-button-next custom-swiper-button">
-        <div class="arrow-right"></div>
-      </div>
     </div>
   </div>
 </div>
@@ -108,8 +194,8 @@
       loop: {{ section.settings.loop_slides | json }},
       speed: {{ section.settings.slider_speed }},
       navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
+        nextEl: '.custom-swiper-button-next',
+        prevEl: '.custom-swiper-button-prev',
       }
     });
   });
@@ -144,7 +230,9 @@
 }
 
 .slide-text {
-  margin-top: 617px;
+  position: absolute;
+  left: 255px;
+  top: 597px;
 }
 
 .slide-content h2 {
@@ -178,51 +266,118 @@
 /* Стили для навигационных стрелок */
 .custom-swiper-navigation {
   display: flex;
-  justify-content: center;
-  gap: 20px;
   position: absolute;
-  bottom: -50px; /* Расположение стрелок под слайдером */
-  left: 50%;
-  transform: translateX(-50%);
+  top: 674px;
+  right: 255px;
+  width: 100%; /* Увеличена ширина на 100% */
+  height: auto;
+  transform: translateY(-50%);
+  z-index: 1000; /* Убедитесь, что z-index больше, чтобы кнопки были видимы */
+}
+
+/* Анимация для автоматического рисования линии */
+@keyframes draw-circle {
+  0% {
+    stroke-dashoffset: 185; /* Линия скрыта в начале */
+  }
+  100% {
+    stroke-dashoffset: 0; /* Линия полностью рисуется */
+  }
 }
 
 .custom-swiper-button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 50px;
-  height: 50px;
-  background: #ffffff;
-  border: 2px solid #42ABDE;
-  border-radius: 50%;
+  background-color: transparent;
+  padding: 10px; /* Добавлены отступы */
   cursor: pointer;
-  transition: background 0.3s, border-color 0.3s;
 }
 
-.custom-swiper-button:hover {
-  background: #42ABDE; /* Изменение цвета фона при наведении */
+.custom-swiper-button svg {
+  transition: background 0.3s ease, stroke 0.3s ease;
 }
 
-.custom-swiper-button:hover .arrow-right,
-.custom-swiper-button:hover .arrow-left {
-  border-color: #fff; /* Изменение цвета стрелок при наведении */
+/* Применение анимации к circle в SVG */
+.custom-swiper-button svg circle {
+  stroke: #DDDDDD; /* Цвет обводки по умолчанию */
+  stroke-width: 1.5;
+  transform-origin: 50% 50%;
+  stroke-dasharray: 186; /* Общая длина круга (примерное значение для круга 60px) */
+  stroke-dashoffset: 186; /* Начинаем с полной длины (сделать круг пустым) */
 }
 
-/* Стили стрелок */
-.arrow-right,
-.arrow-left {
-  display: block;
-  width: 16px;
-  height: 16px;
-  border: solid #42ABDE;
-  border-width: 0 4px 4px 0;
+.custom-swiper-button-next svg circle {
+  stroke: #42ABDE;
+  transform: rotate(-90deg);
+  stroke-dasharray: 185;
+  stroke-dashoffset: 185;
+  animation: draw-circle 3s linear infinite ; /* Автоматическая анимация */
 }
 
-.arrow-right {
-  transform: rotate(-45deg); /* Поворот стрелки вправо */
+.custom-swiper-button-prev svg circle {
+  stroke: #42ABDE;
+  transform: rotate(90deg);
+  stroke-dasharray: 185;
+  stroke-dashoffset: 185;
+  animation: draw-circle 3s linear infinite; /* Автоматическая анимация */
 }
 
-.arrow-left {
-  transform: rotate(135deg); /* Поворот стрелки влево */
+.custom-swiper-button:hover circle {
+  fill: #42ABDE; /* Изменение цвета круга при наведении */
 }
+
+.custom-swiper-button:hover path {
+  stroke: #fff; /* Изменение цвета стрелок при наведении */
+}
+
+.hero-background__text {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* Изменено на flex-start */
+  font-family: 'Karla', sans-serif;
+  font-weight: 900;
+  opacity: 0.1;
+  text-transform: uppercase;
+  white-space: nowrap; /* Оставляем, чтобы текст не переносился */
+  {% comment %} color: #F5F5F5; {% endcomment %}
+}
+
+.hero-background__text span {
+  font-size: 197px;
+  display: inline-block;
+  padding: 0 50px; /* Увеличьте отступы, чтобы предотвратить наложение */
+}
+
+.hero-background__text--top {
+  top: 0;
+  left: 0; /* Начинаем анимацию с левого края */
+  animation: moveRight 30s linear infinite; 
+}
+
+.hero-background__text--bottom {
+  top: 25%;
+  left: 0; /* Начинаем анимацию с левого края */
+  animation: moveLeft 30s linear infinite;
+}
+
+/* Анимация движения вправо */
+@keyframes moveRight {
+  0% {
+    transform: translateX(-100%); /* Начало анимации вне видимой области */
+  }
+  100% {
+    transform: translateX(30%); /* Проходим через всю ширину */
+  }
+}
+
+/* Анимация движения влево */
+@keyframes moveLeft {
+  0% {
+    transform: translateX(30%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+
 </style>
