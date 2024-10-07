@@ -97,42 +97,29 @@
 
 <div class="hero-slider">
   <div class="swiper-container">
-    <!-- Динамический фоновой текст настраивается через блоки -->
-    {% comment %} <div class="hero-background">
-      <div class="hero-background__text hero-background__text--top">
-        {% for block in section.blocks %}
-          {% if block.type == 'text_line_top' %}
-            <span>Debug top: {{ block }}</span>
-            {% if block.settings.top_text %}
-              {% for i in (1..8) %}
-                <span>{{ block.settings.top_text }}</span>
-              {% endfor %}
-            {% else %}
-              <span>No top_text found</span>
-            {% endif %}
-          {% endif %}
-        {% endfor %}
-      </div>
-    
-      <div class="hero-background__text hero-background__text--bottom">
-        {% for block in section.blocks %}
-          <span>Block id: {{ block.id }}</span>
-          <span>Block settings: {{ block.settings }}</span>
-          {% if block.type == 'text_line_bottom' %}
-            <span>Debug bottom: {{ block }}</span>
-            {% if block.settings.bottom_text %}
-              {% for i in (1..8) %}
-                <span>{{ block.settings.bottom_text }}</span>
-              {% endfor %}
-            {% else %}
-              <span>No bottom_text found</span>
-            {% endif %}
-          {% endif %}
-        {% endfor %}        
-      </div>
-    </div> {% endcomment %}
-    
-    
+        <!-- Динамический фоновой текст -->
+         <div class="hero-background">
+          <div class="hero-background__text hero-background__text--top">
+            {% for block in section.blocks %}
+              {% if block.type == 'text_line_top' and block.settings.top_text != blank %}
+                {% for i in (1..20) %} <!-- Динамическое количество повторений -->
+                  <span>{{ block.settings.top_text }}</span>
+                {% endfor %}
+              {% endif %}
+            {% endfor %}
+          </div>
+          <div class="hero-background__text hero-background__text--bottom">
+            {% for block in section.blocks %}
+              {% if block.type == 'text_line_bottom' and block.settings.bottom_text != blank %}
+                {% for i in (1..20) %} <!-- Динамическое количество повторений -->
+                  <span>{{ block.settings.bottom_text }}</span>
+                {% endfor %}
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+       
+{% comment %}     
     <div class="hero-background">
       <div class="hero-background__text hero-background__text--top">
         <span>THE HEALTH</span>
@@ -150,7 +137,7 @@
         <span>PROJECT</span>
         <span>PROJECT</span>
       </div>
-    </div>
+    </div> {% endcomment %}
     
      
     <div class="swiper-wrapper">
@@ -240,7 +227,6 @@
   font-weight: 500;
   font-size: 24px;
   line-height: 36px;
-  {% comment %} margin-bottom: 10px; {% endcomment %}
   color: #231F20;
 }
 
@@ -249,7 +235,6 @@
   font-weight: 400;
   font-size: 15px;
   line-height: 24px;
-  {% comment %} margin-bottom: 20px; {% endcomment %}
   color: #808080;
 }
 
@@ -269,10 +254,10 @@
   position: absolute;
   top: 674px;
   right: 255px;
-  width: 100%; /* Увеличена ширина на 100% */
+  width: 100%;
   height: auto;
   transform: translateY(-50%);
-  z-index: 1000; /* Убедитесь, что z-index больше, чтобы кнопки были видимы */
+  z-index: 1000;
 }
 
 /* Анимация для автоматического рисования линии */
@@ -287,7 +272,7 @@
 
 .custom-swiper-button {
   background-color: transparent;
-  padding: 10px; /* Добавлены отступы */
+  padding: 10px; 
   cursor: pointer;
 }
 
@@ -297,7 +282,7 @@
 
 /* Применение анимации к circle в SVG */
 .custom-swiper-button svg circle {
-  stroke: #DDDDDD; /* Цвет обводки по умолчанию */
+  stroke: #DDDDDD;
   stroke-width: 1.5;
   transform-origin: 50% 50%;
   stroke-dasharray: 186; /* Общая длина круга (примерное значение для круга 60px) */
@@ -332,31 +317,30 @@
   position: absolute;
   display: flex;
   align-items: center;
-  justify-content: flex-start; /* Изменено на flex-start */
+  justify-content: flex-start;
   font-family: 'Karla', sans-serif;
   font-weight: 900;
   opacity: 0.1;
   text-transform: uppercase;
-  white-space: nowrap; /* Оставляем, чтобы текст не переносился */
-  {% comment %} color: #F5F5F5; {% endcomment %}
+  white-space: nowrap;
 }
 
 .hero-background__text span {
   font-size: 197px;
   display: inline-block;
-  padding: 0 50px; /* Увеличьте отступы, чтобы предотвратить наложение */
+  padding: 0 50px;
 }
 
 .hero-background__text--top {
   top: 0;
   left: 0; /* Начинаем анимацию с левого края */
-  animation: moveRight 30s linear infinite; 
+  animation: moveRight 60s linear infinite; 
 }
 
 .hero-background__text--bottom {
-  top: 25%;
+  top: 15%;
   left: 0; /* Начинаем анимацию с левого края */
-  animation: moveLeft 30s linear infinite;
+  animation: moveLeft 60s linear infinite;
 }
 
 /* Анимация движения вправо */
@@ -372,12 +356,10 @@
 /* Анимация движения влево */
 @keyframes moveLeft {
   0% {
-    transform: translateX(30%);
+    transform: translateX(8%);
   }
   100% {
-    transform: translateX(-100%);
+    transform: translateX(-120%);
   }
 }
-
-
 </style>
