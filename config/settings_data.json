@@ -185,13 +185,27 @@
               "slide_button_text": "Buy now ...",
               "slide_button_link": "/"
             }
+          },
+          "text_line_top_zqU79Q": {
+            "type": "text_line_top",
+            "settings": {
+              "top_text": "THE HEALTH"
+            }
+          },
+          "text_line_bottom_BAqXq8": {
+            "type": "text_line_bottom",
+            "settings": {
+              "bottom_text": "PROJECT"
+            }
           }
         },
         "block_order": [
           "slide_m7UhrY",
           "slide_Ln9eQk",
           "slide_TjMXdn",
-          "slide_LkhTnN"
+          "slide_LkhTnN",
+          "text_line_top_zqU79Q",
+          "text_line_bottom_BAqXq8"
         ],
         "settings": {
           "section_title": "Our Products",
