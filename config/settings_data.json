@@ -248,12 +248,22 @@
               "product_image": "shopify://shop_images/Ultimate_plant_choc_1.png",
               "background_color": "green"
             }
+          },
+          "product_card_wGJwBX": {
+            "type": "product_card",
+            "settings": {
+              "product_title": "Whey Protein",
+              "product_description": "Whey Protein is a high-quality protein supplement derived from milk during the cheese-making process. Recognized for its rapid absorption and rich amino acid profile, it supports muscle growth, repair, and overall athletic performance.",
+              "product_image": "shopify://shop_images/banana.png",
+              "background_color": "blue"
+            }
           }
         },
         "block_order": [
           "product_card_bnNtWy",
           "product_card_rN6k8R",
-          "product_card_fGyMLB"
+          "product_card_fGyMLB",
+          "product_card_wGJwBX"
         ],
         "settings": {
         }
