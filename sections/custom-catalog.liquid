@@ -1,0 +1,211 @@
+<div class="collection-section">
+    <!-- Ссылки на коллекции -->
+    <div class="collection-links">
+      {% for collection in collections %}
+        <a href="#" class="collection-link {% if forloop.first %}active{% endif %}" data-handle="{{ collection.handle }}">
+          {{ collection.title }} <sup class="product-count">{{ collection.products_count }}</sup>
+        </a>
+      {% endfor %}
+    </div>
+    <div class="catalog-body-text-wrapper">
+    <p class="catalog-body-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a nunc ultrices, feugiat augue vitae, accumsan quam.</p>
+    </div>
+    <!-- Контейнер для продуктов -->
+    <div class="swiper-container product-slider">
+      <div class="swiper-wrapper">
+        <!-- Продукты каждой коллекции -->
+        {% for collection in collections %}
+          {% for product in collection.products %}
+            <div class="swiper-slide product-item" data-collection="{{ collection.handle }}" style="{% if forloop.parentloop.first and forloop.first %}display: block;{% else %}display: none;{% endif %}">
+              <div class="product-image-wrapper">
+                <img width="450px" height="435px" src="{{ product.featured_image | image_url}}" alt="{{ product.title }}" class="product-image" />
+              </div>
+              <div class="product-details">
+                <h2 class="product-description">{{ product.description }}</h2>
+                <p class="product-weight">{{ product.variants.weight }}</p>
+                <p class="product-price">{{ product.price | money }}</p>
+              </div>
+            </div>
+          {% endfor %}
+        {% endfor %}
+      </div>
+  
+      <!-- Кнопки навигации со встроенными SVG -->
+      <div class="catalog-swiper-navigation">
+        <div class="swiper-catalog-button swiper-catalog-button-prev">
+            <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+             <rect width="50" height="50" rx="25" transform="matrix(-1 0 0 1 50 0)" fill="#F8F8F8"/>
+             <path d="M34.8989 25H15.0999M15.0999 25L21.6996 18.4004M15.0999 25L21.6996 31.5997" stroke="#42ABDE" stroke-width="1.5"/>
+            </svg>
+        </div>
+        <div class="swiper-catalog-button swiper-catalog-button-next">
+            <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+             <rect width="50" height="50" rx="25" fill="#F8F8F8"/>
+             <path d="M15.1011 25H34.9001M34.9001 25L28.3004 18.4004M34.9001 25L28.3004 31.5997" stroke="#42ABDE" stroke-width="1.5"/>
+            </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Инициализация Swiper
+      let swiper = new Swiper('.product-slider', {
+        slidesPerView: 5,
+        spaceBetween: 10,
+        loop: false,
+        navigation: {
+        nextEl: '.swiper-catalog-button-next',  // Используем кастомные кнопки
+        prevEl: '.swiper-catalog-button-prev',  // Используем кастомные кнопки
+        },
+        breakpoints: {
+          1920: {
+            slidesPerView: 5,
+          },
+          1366: {
+            slidesPerView: 4,
+          },
+          1024: {
+            slidesPerView: 3,
+          },
+          768: {
+            slidesPerView: 2,
+          },
+          480: {
+            slidesPerView: 1,
+          }
+        }
+      });
+  
+      // Обработка кликов по ссылкам коллекций
+      document.querySelectorAll('.collection-link').forEach(link => {
+        link.addEventListener('click', function (event) {
+          event.preventDefault();
+  
+          // Удаляем активный класс со всех ссылок
+          document.querySelectorAll('.collection-link').forEach(link => link.classList.remove('active'));
+  
+          // Устанавливаем активный класс для выбранной коллекции
+          this.classList.add('active');
+  
+          // Получаем идентификатор выбранной коллекции
+          const selectedCollection = this.dataset.handle;
+  
+          // Обновляем видимость продуктов
+          document.querySelectorAll('.swiper-slide.product-item').forEach(product => {
+            if (product.dataset.collection === selectedCollection) {
+              product.style.display = 'block';
+            } else {
+              product.style.display = 'none';
+            }
+          });
+  
+          // Обновляем Swiper
+          swiper.update();
+        });
+      });
+    });
+  </script>
+
+<style>
+.collection-section {
+  width: 100%;
+  padding: 100px;
+  text-align: center;
+}
+
+.collection-links {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.collection-link {
+  text-decoration: none;
+  font-family: Montserrat, sans-serif;
+  font-size: 40px;
+  line-height: 60px;
+  color: #808080;
+}
+
+.catalog-body-text-wrapper {
+   display: inline-block;
+   max-width: 508px;
+   padding-bottom: 20px;
+}
+
+.catalog-body-text {
+font-family: "Karla", sans-serif;
+font-weight: 400;
+font-size: 15px;
+line-height: 24px;
+color: #808080;
+}
+
+.collection-link.active,
+.collection-link:hover {
+  font-weight: bold;
+  color: #231F20;
+}
+
+.product-slider {
+  position: relative;
+  width: 100%;
+}
+
+.swiper-slide {
+  display: grid;
+  justify-content: center;
+}
+
+.product-item {
+  padding-top: 60px;
+  background-color: #f8f8f8;
+  border-radius: 12px;
+  width: 450px;
+  height: 580px;
+}
+.catalog-swiper-navigation {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  margin-top: 30px;
+}
+.product-image-wrapper {
+  height: 338px;
+  width: 430px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.product-image {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 50px;
+}
+
+.product-description {
+  font-family: "Montserrat", sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 27px;
+  color: #231F20;
+}
+
+.product-price {
+  font-size: 14px;
+  color: #42ABDE;
+}
+
+.swiper-catalog-button:hover rect {
+  fill: #42ABDE; /* Изменение цвета круга при наведении */
+}
+
+.swiper-catalog-button:hover path {
+  stroke: #fff; /* Изменение цвета стрелок при наведении */
+}
+</style>
