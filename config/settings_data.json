@@ -239,11 +239,21 @@
               "product_image": "shopify://shop_images/mass_berries_1.png",
               "background_color": "red"
             }
+          },
+          "product_card_fGyMLB": {
+            "type": "product_card",
+            "settings": {
+              "product_title": "Plant Protein",
+              "product_description": "Plant Protein is a nutritional powerhouse sourced from plants such as peas, hemp, soy, or rice, providing a complete and sustainable alternative to animal-based proteins. Packed with essential amino acids, it promotes muscle development, supports overall health, and is favored by those following vegetarian, vegan, or environmentally conscious lifestyles.",
+              "product_image": "shopify://shop_images/Ultimate_plant_choc_1.png",
+              "background_color": "green"
+            }
           }
         },
         "block_order": [
           "product_card_bnNtWy",
-          "product_card_rN6k8R"
+          "product_card_rN6k8R",
+          "product_card_fGyMLB"
         ],
         "settings": {
         }
