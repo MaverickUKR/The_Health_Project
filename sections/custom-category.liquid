@@ -25,17 +25,17 @@
           "label": "Product Image"
         },
         {
-          "type": "select",
-          "id": "background_color",
-          "label": "Background Color",
-          "default": "blue",
-          "options": [
-            { "value": "blue", "label": "Blue" },
-            { "value": "red", "label": "Red" },
-            { "value": "green", "label": "Green" },
-            { "value": "yellow", "label": "Yellow" }
-          ]
-        }
+            "type": "select",
+            "id": "color_scheme",
+            "label": "Color Scheme",
+            "default": "blue",
+            "options": [
+              { "value": "blue", "label": "Blue" },
+              { "value": "red", "label": "Red" },
+              { "value": "green", "label": "Green" },
+              { "value": "yellow", "label": "Yellow" }
+            ]
+          }
       ]
     }
   ],
@@ -58,16 +58,16 @@
     <!-- Контейнер товаров -->
     <div class="product-grid">
       {% for block in section.blocks %}
-        <div class="product-card product-card--{{ block.settings.background_color }}">
+        <div class="product-card product-card--{{ block.settings.color_scheme }}">
           <div class="product-info">
-            <div>
-             <h2 class="product-title">{{ block.settings.product_title | upcase }}</h2>
-              <span><svg width="71" height="72" viewBox="0 0 71 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <div class="product-title-wrapper">
+              <h2 class="product-title">{{ block.settings.product_title | upcase }}</h2>
+              <svg class="icon" width="71" height="72" viewBox="0 0 71 72" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect y="36" width="50" height="50" rx="25" transform="rotate(-45 0 36)" fill="white"/>
-                <path d="M28.3558 42.9996L42.3558 28.9996M42.3558 28.9996H33.0224M42.3558 28.9996V38.3329" stroke="#42ABDE" stroke-width="1.5"/>
-                </svg></span>
+                <path d="M28.3558 42.9996L42.3558 28.9996M42.3558 28.9996H33.0224M42.3558 28.9996V38.3329" class="svg-path" stroke-width="1.5"/>
+              </svg>
             </div>
-             <p class="product-description">{{ block.settings.product_description }}</p>
+            <p class="product-description">{{ block.settings.product_description }}</p>
           </div>
           <div class="product-image">
             <img width="695px" height="752px" src="{{ block.settings.product_image | image_url: width: 350 }}" alt="{{ block.settings.product_title }}" />
@@ -79,7 +79,7 @@
 
   <style>
   .top-sellers-section {
-    padding: 50px 20px;
+    padding: 50px 0;
     text-align: center;
   }
   
@@ -107,6 +107,7 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
+    margin: 0 255px;
   }
   
   .product-card {
@@ -137,8 +138,18 @@
   
   .product-info {
     flex: 1;
+    margin: 0 30px;
   }
   
+  .product-title-wrapper {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .product-title-wrapper svg {
+    align-self: center;
+  }
+
   .product-title {
     font-family: "Montserrat", sans-serif;
     font-size: 40px;
@@ -162,5 +173,38 @@
   .product-image img {
     max-width: 100%;
     border-radius: 5px;
+  }
+
+  /* Стили для цветовых схем */
+.product-card--blue {
+    background: #42ABDE14;
+  }
+  .product-card--blue .product-title, .product-card--blue .product-description, .product-card--blue .svg-path {
+    color: #42ABDE;
+    stroke: #42ABDE;
+  }
+  
+  .product-card--red {
+    background: #E35F5E14;
+  }
+  .product-card--red .product-title, .product-card--red .product-description, .product-card--red .svg-path {
+    color: #E35F5E;
+    stroke: #E35F5E;
+  }
+  
+  .product-card--green {
+    background: #5BB98414;
+  }
+  .product-card--green .product-title, .product-card--green .product-description, .product-card--green .svg-path {
+    color: #5BB984;
+    stroke: #5BB984;
+  }
+  
+  .product-card--yellow {
+    background: #ffffe014;
+  }
+  .product-card--yellow .product-title, .product-card--yellow .product-description, .product-card--yellow .svg-path {
+    color: #ffffe0;
+    stroke: #ffffe0;
   }
   </style>
