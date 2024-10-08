@@ -230,10 +230,20 @@
               "product_image": "shopify://shop_images/image_2.png",
               "background_color": "blue"
             }
+          },
+          "product_card_rN6k8R": {
+            "type": "product_card",
+            "settings": {
+              "product_title": "Mass Gainer",
+              "product_description": "Mass Gainer is a calorie-dense supplement designed to support muscle mass and weight gain, typically containing a blend of proteins, carbohydrates, and fats. It aids individuals seeking to increase their calorie intake for muscle building or those with difficulty gaining weight through regular diet alone.",
+              "product_image": "shopify://shop_images/mass_berries_1.png",
+              "background_color": "red"
+            }
           }
         },
         "block_order": [
-          "product_card_bnNtWy"
+          "product_card_bnNtWy",
+          "product_card_rN6k8R"
         ],
         "settings": {
         }
