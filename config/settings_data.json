@@ -228,7 +228,7 @@
               "product_title": "Creatine Monohydrate",
               "product_description": "Creatine Monohydrate is a popular dietary supplement widely used in fitness circles, known for enhancing muscle strength, improving exercise performance, and supporting muscle recovery. It works by increasing the body's production of ATP, the primary energy currency of cells.",
               "product_image": "shopify://shop_images/image_2.png",
-              "background_color": "blue"
+              "color_scheme": "blue"
             }
           },
           "product_card_rN6k8R": {
@@ -237,7 +237,7 @@
               "product_title": "Mass Gainer",
               "product_description": "Mass Gainer is a calorie-dense supplement designed to support muscle mass and weight gain, typically containing a blend of proteins, carbohydrates, and fats. It aids individuals seeking to increase their calorie intake for muscle building or those with difficulty gaining weight through regular diet alone.",
               "product_image": "shopify://shop_images/mass_berries_1.png",
-              "background_color": "red"
+              "color_scheme": "red"
             }
           },
           "product_card_fGyMLB": {
@@ -246,7 +246,7 @@
               "product_title": "Plant Protein",
               "product_description": "Plant Protein is a nutritional powerhouse sourced from plants such as peas, hemp, soy, or rice, providing a complete and sustainable alternative to animal-based proteins. Packed with essential amino acids, it promotes muscle development, supports overall health, and is favored by those following vegetarian, vegan, or environmentally conscious lifestyles.",
               "product_image": "shopify://shop_images/Ultimate_plant_choc_1.png",
-              "background_color": "green"
+              "color_scheme": "green"
             }
           },
           "product_card_wGJwBX": {
@@ -255,7 +255,7 @@
               "product_title": "Whey Protein",
               "product_description": "Whey Protein is a high-quality protein supplement derived from milk during the cheese-making process. Recognized for its rapid absorption and rich amino acid profile, it supports muscle growth, repair, and overall athletic performance.",
               "product_image": "shopify://shop_images/banana.png",
-              "background_color": "blue"
+              "color_scheme": "blue"
             }
           }
         },
