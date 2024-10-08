@@ -18,10 +18,11 @@
       <!-- Включение кастомного хедера -->
       {% section 'custom-header' %}
       {% section 'custom-hero' %}
+      {% section 'custom-catalog' %}
       <!-- Основной контент страницы -->
-      <main class="main-content">
+      {% comment %} <main class="main-content">
         {{ content_for_layout }}
-      </main>
+      </main> {% endcomment %}
     
       <!-- Footer -->
       {% comment %} {% render 'footer' %} {% endcomment %}
