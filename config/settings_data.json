@@ -212,6 +212,31 @@
           "slider_speed": 3000,
           "loop_slides": true
         }
+      },
+      "custom-catalog": {
+        "type": "custom-catalog",
+        "settings": {
+          "catalog_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a nunc ultrices, feugiat augue vitae, accumsan quam."
+        }
+      },
+      "custom-category": {
+        "type": "custom-category",
+        "blocks": {
+          "product_card_bnNtWy": {
+            "type": "product_card",
+            "settings": {
+              "product_title": "Creatine Monohydrate",
+              "product_description": "Creatine Monohydrate is a popular dietary supplement widely used in fitness circles, known for enhancing muscle strength, improving exercise performance, and supporting muscle recovery. It works by increasing the body's production of ATP, the primary energy currency of cells.",
+              "product_image": "shopify://shop_images/image_2.png",
+              "background_color": "blue"
+            }
+          }
+        },
+        "block_order": [
+          "product_card_bnNtWy"
+        ],
+        "settings": {
+        }
       }
     },
     "content_for_index": [
