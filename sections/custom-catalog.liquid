@@ -1,14 +1,71 @@
+{% schema %}
+{
+  "name": "Collection Section",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "catalog_text",
+      "label": "Catalog Body Text",
+      "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a nunc ultrices, feugiat augue vitae, accumsan quam."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Select Collection"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Default",
+      "category": "Custom Sections",
+      "settings": {
+        "catalog_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a nunc ultrices, feugiat augue vitae, accumsan quam."
+      }
+    }
+  ]
+}
+{% endschema %}
+
+
 <div class="collection-section">
     <!-- Ссылки на коллекции -->
-    <div class="collection-links">
+    {% comment %} <div class="collection-links">
       {% for collection in collections %}
         <a href="#" class="collection-link {% if forloop.first %}active{% endif %}" data-handle="{{ collection.handle }}">
           {{ collection.title }} <sup class="product-count">{{ collection.products_count }}</sup>
         </a>
       {% endfor %}
-    </div>
+    </div> {% endcomment %}
+    <div class="collection-section">
+      <!-- Ссылки на коллекции -->
+      <div class="collection-links">
+        {% if section.blocks.size > 0 %}
+          {% for block in section.blocks %}
+            {% if block.type == 'collection' %}
+              <a href="#" class="collection-link {% if forloop.first %}active{% endif %}" data-handle="{{ block.settings.collection.handle }}">
+                {{ block.settings.collection.title }} <sup class="product-count">{{ block.settings.collection.products_count }}</sup>
+              </a>
+            {% endif %}
+          {% endfor %}
+        {% else %}
+          {% for collection in collections %}
+            <a href="#" class="collection-link {% if forloop.first %}active{% endif %}" data-handle="{{ collection.handle }}">
+              {{ collection.title }} <sup class="product-count">{{ collection.products_count }}</sup>
+            </a>
+          {% endfor %}
+        {% endif %}
+      </div>
+
     <div class="catalog-body-text-wrapper">
-    <p class="catalog-body-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a nunc ultrices, feugiat augue vitae, accumsan quam.</p>
+    <p class="catalog-body-text">{{ section.settings.catalog_text }}</p>
     </div>
     <!-- Контейнер для продуктов -->
     <div class="swiper-container product-slider">
@@ -16,14 +73,14 @@
         <!-- Продукты каждой коллекции -->
         {% for collection in collections %}
           {% for product in collection.products %}
-            <div class="swiper-slide product-item" data-collection="{{ collection.handle }}" style="{% if forloop.parentloop.first and forloop.first %}display: block;{% else %}display: none;{% endif %}">
+            <div class="swiper-slide product-item" data-collection="{{ collection.handle }}">
               <div class="product-image-wrapper">
                 <img width="450px" height="435px" src="{{ product.featured_image | image_url}}" alt="{{ product.title }}" class="product-image" />
               </div>
               <div class="product-details">
-                <h2 class="product-description">{{ product.description }}</h2>
-                <p class="product-weight">{{ product.variants.weight }}</p>
-                <p class="product-price">{{ product.price | money }}</p>
+                <h5 class="product-description">{{ product.description }}</h5>
+                <p class="product-weight"> {{ product.weight }} {{ product.weight_unit }} 200g</p>
+                <h4 class="product-price">{{ product.price | money }}</h4>
               </div>
             </div>
           {% endfor %}
@@ -64,15 +121,12 @@
             slidesPerView: 5,
           },
           1366: {
-            slidesPerView: 4,
-          },
-          1024: {
             slidesPerView: 3,
           },
           768: {
             slidesPerView: 2,
           },
-          480: {
+          428: {
             slidesPerView: 1,
           }
         }
@@ -111,7 +165,7 @@
 <style>
 .collection-section {
   width: 100%;
-  padding: 100px;
+  padding-top: 100px;
   text-align: center;
 }
 
@@ -120,6 +174,7 @@
   justify-content: center;
   gap: 20px;
   margin-bottom: 20px;
+  white-space: nowrap;
 }
 
 .collection-link {
@@ -128,6 +183,15 @@
   font-size: 40px;
   line-height: 60px;
   color: #808080;
+}
+.collection-link sup {
+  font-weight: normal;
+}
+
+.collection-link.active sup,
+.collection-link:hover sup {
+  color: #808080; /* Цвет для <sup> остается неизменным */
+  font-weight: normal; /* Вес шрифта остается неизменным */
 }
 
 .catalog-body-text-wrapper {
@@ -161,10 +225,10 @@ color: #808080;
 }
 
 .product-item {
+  display: grid;
   padding-top: 60px;
   background-color: #f8f8f8;
   border-radius: 12px;
-  width: 450px;
   height: 580px;
 }
 .catalog-swiper-navigation {
@@ -184,10 +248,12 @@ color: #808080;
 
 .product-image {
   max-width: 100%;
-  height: auto;
-  margin-bottom: 50px;
+  height: inherit;
 }
 
+.product-details {
+padding-top: 30px
+}
 .product-description {
   font-family: "Montserrat", sans-serif;
   font-size: 18px;
@@ -196,8 +262,19 @@ color: #808080;
   color: #231F20;
 }
 
+.product-weight {
+font-family: "Karla", sans-serif;
+weight: 400;
+font-size: 15px;
+line-height: 24px;
+color: #808080;
+}
+
 .product-price {
-  font-size: 14px;
+  font-family: "Montserrat", sans-serif;
+  weight: 500;
+  font-size: 24px;
+  line-height: 36px;
   color: #42ABDE;
 }
 
@@ -207,5 +284,57 @@ color: #808080;
 
 .swiper-catalog-button:hover path {
   stroke: #fff; /* Изменение цвета стрелок при наведении */
+}
+@media screen and (max-width: 1366px) {
+  .collection-link {
+    font-size: 32px;
+    line-height: 48px;
+  }
+  .product-item {
+    padding-top: 30px;
+    height: 515px;
+  }
+  .product-description {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 27px;
+    color: #231F20;
+  }
+  .product-description p {
+  margin: 0;
+  }
+  }
+  @media screen and (max-width: 768px) {
+    .product-item {
+      padding-top: 60px;
+      height: 580px;
+    }
+    .collection-links {
+    justify-content: space-between;
+    margin-left: 62px;
+  }
+    .catalog-body-text-wrapper {
+      display: block;
+      text-align: left;
+      margin-left: 62px;
+   }
+  }
+  @media screen and (max-width: 428px) {
+    .product-item {
+      padding-top: 60px;
+      height: 536px;
+    }
+    .collection-links {
+      margin-left: 22px;
+  }
+    .collection-link {
+     font-size: 24px;
+     line-height: 36px;
+  }
+    .catalog-body-text-wrapper {
+     margin-left: 22px;
+   }
+  }
 }
 </style>
