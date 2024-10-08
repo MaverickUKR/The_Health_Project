@@ -1,0 +1,166 @@
+{% schema %}
+{
+  "name": "Top Sellers Section",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "product_card",
+      "name": "Product Card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "product_title",
+          "label": "Product Title",
+          "default": "Product Title"
+        },
+        {
+          "type": "textarea",
+          "id": "product_description",
+          "label": "Product Description",
+          "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+        },
+        {
+          "type": "image_picker",
+          "id": "product_image",
+          "label": "Product Image"
+        },
+        {
+          "type": "select",
+          "id": "background_color",
+          "label": "Background Color",
+          "default": "blue",
+          "options": [
+            { "value": "blue", "label": "Blue" },
+            { "value": "red", "label": "Red" },
+            { "value": "green", "label": "Green" },
+            { "value": "yellow", "label": "Yellow" }
+          ]
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Top Sellers",
+      "category": "Custom Sections"
+    }
+  ]
+}
+{% endschema %}
+  
+<div class="top-sellers-section">
+    <!-- Заголовок секции -->
+    <div class="section-header">
+      <h2 class="section-title">Discover our top sellers</h2>
+      <p class="section-subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a nunc ultrices, feugiat augue vitae, accumsan quam.</p>
+    </div>
+  
+    <!-- Контейнер товаров -->
+    <div class="product-grid">
+      {% for block in section.blocks %}
+        <div class="product-card product-card--{{ block.settings.background_color }}">
+          <div class="product-info">
+            <div>
+             <h2 class="product-title">{{ block.settings.product_title | upcase }}</h2>
+              <span><svg width="71" height="72" viewBox="0 0 71 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect y="36" width="50" height="50" rx="25" transform="rotate(-45 0 36)" fill="white"/>
+                <path d="M28.3558 42.9996L42.3558 28.9996M42.3558 28.9996H33.0224M42.3558 28.9996V38.3329" stroke="#42ABDE" stroke-width="1.5"/>
+                </svg></span>
+            </div>
+             <p class="product-description">{{ block.settings.product_description }}</p>
+          </div>
+          <div class="product-image">
+            <img width="695px" height="752px" src="{{ block.settings.product_image | image_url: width: 350 }}" alt="{{ block.settings.product_title }}" />
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <style>
+  .top-sellers-section {
+    padding: 50px 20px;
+    text-align: center;
+  }
+  
+  .section-header {
+    display: inline-block;
+    margin-bottom: 30px;
+  }
+  
+  .section-title {
+    font-family: "Montserrat", sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: #231F20;
+  }
+  
+  .section-subtitle {
+    font-family: "Karla", sans-serif;
+    font-size: 16px;
+    color: #808080;
+    margin-top: 10px;
+    max-width: 508px;
+  }
+  
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  
+  .product-card {
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    display: grid;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+  }
+  
+  .product-card--blue {
+    background: #e6f2ff;
+  }
+  
+  .product-card--red {
+    background: #ffe6e6;
+  }
+  
+  .product-card--green {
+    background: #e6ffe6;
+  }
+  
+  .product-card--yellow {
+    background: #fffce6;
+  }
+  
+  .product-info {
+    flex: 1;
+  }
+  
+  .product-title {
+    font-family: "Montserrat", sans-serif;
+    font-size: 40px;
+    line-height: 60px;
+    font-weight: 500;
+    color: #231F20;
+  }
+  
+  .product-description {
+    font-family: "Karla", sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 24px;
+    color: #808080;
+  }
+  
+  .product-image {
+    justify-self: center;
+  }
+
+  .product-image img {
+    max-width: 100%;
+    border-radius: 5px;
+  }
+  </style>
