@@ -63,12 +63,13 @@
           {% endfor %}
         {% endif %}
       </div>
+    </div>
 
     <div class="catalog-body-text-wrapper">
     <p class="catalog-body-text">{{ section.settings.catalog_text }}</p>
     </div>
     <!-- Контейнер для продуктов -->
-    <div class="swiper-container product-slider">
+    <div class="swiper-container swiper-catalog">
       <div class="swiper-wrapper">
         <!-- Продукты каждой коллекции -->
         {% for collection in collections %}
@@ -89,44 +90,45 @@
   
       <!-- Кнопки навигации со встроенными SVG -->
       <div class="catalog-swiper-navigation">
-        <div class="swiper-catalog-button swiper-catalog-button-prev">
+        <div class="swiper-catalog-button-prev">
             <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
              <rect width="50" height="50" rx="25" transform="matrix(-1 0 0 1 50 0)" fill="#F8F8F8"/>
              <path d="M34.8989 25H15.0999M15.0999 25L21.6996 18.4004M15.0999 25L21.6996 31.5997" stroke="#42ABDE" stroke-width="1.5"/>
             </svg>
         </div>
-        <div class="swiper-catalog-button swiper-catalog-button-next">
+        <div class="swiper-catalog-button-next">
             <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
              <rect width="50" height="50" rx="25" fill="#F8F8F8"/>
              <path d="M15.1011 25H34.9001M34.9001 25L28.3004 18.4004M34.9001 25L28.3004 31.5997" stroke="#42ABDE" stroke-width="1.5"/>
             </svg>
         </div>
       </div>
+
     </div>
   </div>
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       // Инициализация Swiper
-      let swiper = new Swiper('.product-slider', {
+      let catalogSwiper = new Swiper('.swiper-catalog', {
         slidesPerView: 5,
         spaceBetween: 10,
-        loop: false,
+        loop: true,
         navigation: {
         nextEl: '.swiper-catalog-button-next',  // Используем кастомные кнопки
         prevEl: '.swiper-catalog-button-prev',  // Используем кастомные кнопки
         },
         breakpoints: {
-          1920: {
+          1367: {
             slidesPerView: 5,
           },
-          1366: {
+          769: {
             slidesPerView: 3,
           },
-          768: {
+          429: {
             slidesPerView: 2,
           },
-          428: {
+          0: {
             slidesPerView: 1,
           }
         }
@@ -148,15 +150,11 @@
   
           // Обновляем видимость продуктов
           document.querySelectorAll('.swiper-slide.product-item').forEach(product => {
-            if (product.dataset.collection === selectedCollection) {
-              product.style.display = 'block';
-            } else {
-              product.style.display = 'none';
-            }
+            product.style.display = (product.dataset.collection === selectedCollection) ? 'block' : 'none';
           });
   
           // Обновляем Swiper
-          swiper.update();
+          catalogSwiper.update();
         });
       });
     });
@@ -214,9 +212,10 @@ color: #808080;
   color: #231F20;
 }
 
-.product-slider {
+.swiper-catalog {
   position: relative;
   width: 100%;
+  overflow: hidden;
 }
 
 .swiper-slide {
@@ -278,22 +277,31 @@ color: #808080;
   color: #42ABDE;
 }
 
-.swiper-catalog-button:hover rect {
+.swiper-catalog-button-next:hover rect {
+  fill: #42ABDE; /* Изменение цвета круга при наведении */
+}
+.swiper-catalog-button-prev:hover rect {
   fill: #42ABDE; /* Изменение цвета круга при наведении */
 }
 
-.swiper-catalog-button:hover path {
+.swiper-catalog-button-next:hover path {
   stroke: #fff; /* Изменение цвета стрелок при наведении */
 }
+.swiper-catalog-button-prev:hover path {
+  stroke: #fff; /* Изменение цвета стрелок при наведении */
+}
+
 @media screen and (max-width: 1366px) {
   .collection-link {
     font-size: 32px;
     line-height: 48px;
   }
+
   .product-item {
     padding-top: 30px;
     height: 515px;
   }
+
   .product-description {
     margin: 0;
     font-size: 18px;
@@ -301,40 +309,47 @@ color: #808080;
     line-height: 27px;
     color: #231F20;
   }
+
   .product-description p {
-  margin: 0;
+    margin: 0;
   }
   }
-  @media screen and (max-width: 768px) {
-    .product-item {
-      padding-top: 60px;
-      height: 580px;
-    }
-    .collection-links {
+
+@media screen and (max-width: 768px) {
+  .product-item {
+    padding-top: 60px;
+    height: 580px;
+  }
+
+  .collection-links {
     justify-content: space-between;
     margin-left: 62px;
   }
-    .catalog-body-text-wrapper {
-      display: block;
-      text-align: left;
-      margin-left: 62px;
+  .catalog-body-text-wrapper {
+    display: block;
+    text-align: left;
+    margin-left: 62px;
+  }
+  }
+
+@media screen and (max-width: 428px) {
+  .product-item {
+    padding-top: 60px;
+    height: 536px;
+  }
+
+  .collection-links {
+    margin-left: 22px;
+  }
+
+  .collection-link {
+    font-size: 24px;
+    line-height: 36px;
+  }
+
+  .catalog-body-text-wrapper {
+    margin-left: 22px;
    }
   }
-  @media screen and (max-width: 428px) {
-    .product-item {
-      padding-top: 60px;
-      height: 536px;
-    }
-    .collection-links {
-      margin-left: 22px;
-  }
-    .collection-link {
-     font-size: 24px;
-     line-height: 36px;
-  }
-    .catalog-body-text-wrapper {
-     margin-left: 22px;
-   }
-  }
-}
+
 </style>

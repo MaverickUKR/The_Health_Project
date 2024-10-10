@@ -56,7 +56,8 @@
     </div>
   
     <!-- Контейнер товаров -->
-    <div class="product-grid">
+    <div class="swiper-container product-slider">
+        <div class="swiper-wrapper product-grid">
       {% for block in section.blocks %}
         <div class="product-card product-card--{{ block.settings.color_scheme }}">
           <div class="product-info">
@@ -75,12 +76,76 @@
         </div>
       {% endfor %}
     </div>
+    </div>
+    <!-- Навигационные кнопки для Swiper -->
+    <div class="category-swiper-navigation">
+        <div class="swiper-category-button swiper-category-button-prev">
+          <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="50" height="50" rx="25" transform="matrix(-1 0 0 1 50 0)" fill="#F8F8F8"/>
+            <path d="M34.8989 25H15.0999M15.0999 25L21.6996 18.4004M15.0999 25L21.6996 31.5997" stroke="#42ABDE" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <div class="swiper-category-button swiper-category-button-next">
+          <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="50" height="50" rx="25" fill="#F8F8F8"/>
+            <path d="M15.1011 25H34.9001M34.9001 25L28.3004 18.4004M34.9001 25L28.3004 31.5997" stroke="#42ABDE" stroke-width="1.5"/>
+          </svg>
+        </div>
+      </div>
   </div>
+  
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let categorySwiper = null;
+      
+        // Функция для добавления или удаления класса swiper-slide в зависимости от ширины экрана
+        function updateSlideClasses() {
+          const productCards = document.querySelectorAll('.product-card');
+      
+          if (window.innerWidth <= 768) {
+            // Добавляем класс swiper-slide на мобильных устройствах
+            productCards.forEach(card => {
+              card.classList.add('swiper-slide');
+            });
+          } else {
+            // Удаляем класс swiper-slide на экранах больше 768px
+            productCards.forEach(card => {
+              card.classList.remove('swiper-slide');
+            });
+          }
+        }
+      
+        // Функция инициализации Swiper
+        function initSwiper() {
+          updateSlideClasses(); // Обновляем классы перед инициализацией
+      
+          if (window.innerWidth <= 768 && !categorySwiper) {
+            categorySwiper = new Swiper('.product-slider', {
+              slidesPerView: 1,
+              spaceBetween: 20,
+              navigation: {
+                nextEl: '.swiper-category-button-next',
+                prevEl: '.swiper-category-button-prev',
+              },
+            });
+          } else if (categorySwiper && window.innerWidth > 768) {
+            categorySwiper.destroy(true, true);
+            categorySwiper = null;
+          }
+        }
+      
+        // Инициализируем Swiper и обновляем классы
+        initSwiper();
+        window.addEventListener('resize', initSwiper); // Обрабатываем изменение размера окна
+      });
+      
+ </script>
 
   <style>
   .top-sellers-section {
     padding: 50px 0;
     text-align: center;
+    {% comment %} overflow: hidden; {% endcomment %}
   }
   
   .section-header {
@@ -107,9 +172,11 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
-    margin: 0 255px;
   }
-  
+  .product-slider {
+    margin: 0 255px;
+    width: auto;
+  }
   .product-card {
     border-radius: 10px;
     background: #fff;
@@ -206,5 +273,109 @@
   .product-card--yellow .product-title, .product-card--yellow .product-description, .product-card--yellow .svg-path {
     color: #ffffe0;
     stroke: #ffffe0;
+  }
+  /* Навигационные кнопки для Swiper */
+.category-swiper-navigation {
+    display: none;
+    justify-content: center;
+    margin-top: 30px;
+  }
+  
+  .swiper-category-button:hover rect{
+    fill: #42ABDE; /* Изменение цвета круга при наведении */
+  }
+  .swiper-category-button:hover path{
+    stroke: #fff; /* Изменение цвета стрелок при наведении */
+  }
+  @media screen and (max-width: 1366px) {
+  .product-grid {
+     display: grid; /* Включаем сетку для отображения товаров */
+    grid-template-columns: repeat(2, 1fr); /* Две колонки */
+    gap: 20px;
+    margin: 0 auto; /* Центрируем сетку */
+    max-width: 1366px; /* Ограничиваем ширину сетки */
+      }
+  .product-slider {
+    margin: 0 63px;
+    width: auto;
+  }
+  .product-title {
+    font-size: 32px;
+    line-height: 48px;
+    font-weight: 600;
+  }
+  .product-description {
+    font-size: 15px;
+    line-height: 21px;
+  }
+  .product-card {
+    height: auto;
+    width: auto;
+  }
+  @media screen and (max-width: 768px) {
+    .top-sellers-section {
+        overflow: hidden;
+      }
+    .product-grid {
+        display: inline-flex; /* Скрыть обычный grid */
+      }
+    .product-card {
+        display: block;
+        margin: 0 auto;
+      }
+    .category-swiper-navigation {
+        display: flex;
+      }
+  }
+  @media screen and (max-width: 428px) {
+    .product-card {
+        display: block;
+        margin: 0 auto;
+        max-width:385px;
+        max-height: 610px;
+      }
+    .category-swiper-navigation {
+        display: flex;
+      }
+      .product-slider {
+        margin: 0 22px;
+        width: auto;
+      }
+      .section-title {
+        font-size: 24px;
+        line-height: 36px;
+        font-weight: 500;
+      }
+      .section-subtitle {
+        font-size: 15px;
+        line-height: 24px;
+        font-weight: 400;
+      }
+      .product-info {
+      margin: 0 20px;
+      }
+      .product-title-wrapper {
+       align-items: center;
+    }
+      .product-title {
+        font-size: 18px;
+        line-height: 27px;
+      }
+      .product-description {
+        line-height: 24px;
+      }
+      .product-card {
+        height: 610px;
+        width: auto;
+      }
+      .product-image {
+       height: fit-content;
+    }
+      .product-image img {
+        height: 388px;
+        object-fit: fill;
+        position: absolute;
+        bottom: 0;
+      }
   }
   </style>
