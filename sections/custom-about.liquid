@@ -1,0 +1,445 @@
+{% schema %}
+{
+  "name": "About Products Section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section Title",
+      "default": "Discover Our Top Products"
+    },
+    {
+      "type": "textarea",
+      "id": "section_subtitle",
+      "label": "Section Subtitle",
+      "default": "Learn more about our best-selling products and their unique benefits."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "selected_collection",
+          "label": "Select Collection"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "About Products",
+      "category": "Custom Sections"
+    }
+  ]
+}
+{% endschema %}
+
+<div class="about-products-section">
+  <!-- Левая часть секции - Товары коллекции -->
+  <div class="about-product-left">
+    {% assign current_collection = collections.first %}
+    {% if current_collection and current_collection.products.size > 0 %}
+      <div class="about-product-content" id="product-container">
+        {% assign first_product = current_collection.products.first %}
+        <!-- Навигация по продуктам (вверх и вниз) -->
+        <div class="about-product-navigation">
+          <button class="nav-button nav-up">&#9650;</button>
+          <button class="nav-button nav-down">&#9660;</button>
+        </div>
+
+        <!-- Информация о продукте -->
+        <div class="about-product-info">
+          <h1 class="about-product-title">{{ first_product.title }}</h1>
+          <p class="about-product-weight">{{ first_product.variants.first.weight }} {{ first_product.variants.first.weight_unit }}</p>
+          <p class="about-product-description">{{ first_product.description }}</p>
+          <ul class="about-product-features">
+            <li>High-quality whey protein</li>
+            <li>Unrivaled value for money</li>
+            <li>3 delicious flavours</li>
+            <li>Mixes instantly</li>
+            <li>Great blend of high-quality proteins</li>
+          </ul>
+          <button class="buy-now-button">Buy now {{ first_product.price | money }}</button>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+
+  <!-- Правая часть секции - Переключение между изображениями товара -->
+  <div class="about-product-right">
+    <div class="about-product-image-container">
+      {% if current_collection %}
+        <img src="{{ first_product.featured_image | image_url }}" alt="{{ first_product.title }}" class="about-product-image" />
+
+        <!-- Переключатели для дополнительных изображений товара -->
+        {% if first_product.images.size > 1 %}
+          <div class="about-product-color-indicators">
+            {% assign image_count = 0 %}
+            {% for image in first_product.images %}
+              {% if image_count < 4 %}
+                <span class="color-indicator" data-image-url="{{ image.src }}" style="background-image: url({{ image.src | image_url }})"></span>
+                {% assign image_count = image_count | plus: 1 %}
+              {% endif %}
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<!-- Скрипт для переключения товаров и изображений -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const collections = {{ collections | json }};
+    const productContainer = document.getElementById('product-container');
+    const collectionIndicators = document.querySelectorAll('.collection-indicator');
+    const colorIndicators = document.querySelectorAll('.color-indicator');
+    let currentCollectionIndex = 0;
+    let currentProductIndex = 0;
+
+    // Функция для обновления информации о товаре
+    function updateProductInfo(collectionIndex, productIndex) {
+      const collection = collections[collectionIndex];
+      const product = collection.products[productIndex];
+
+      document.querySelector('.about-product-title').textContent = product.title;
+      document.querySelector('.about-product-weight').textContent = product.variants[0].weight + ' ' + product.variants[0].weight_unit;
+      document.querySelector('.about-product-description').textContent = product.body_html;
+      document.querySelector('.buy-now-button').textContent = 'Buy now ' + product.price;
+
+      // Обновляем картинку товара
+      const productImage = document.querySelector('.about-product-image');
+      productImage.src = product.featured_image || '';
+      productImage.alt = product.title || 'Product image';
+
+      // Обновление цветных переключателей для изображений
+      updateImageIndicators(product.images);
+    }
+
+    // Функция для обновления индикаторов изображений
+    function updateImageIndicators(images) {
+      const indicatorContainer = document.querySelector('.about-product-color-indicators');
+      indicatorContainer.innerHTML = ''; // Очищаем текущие индикаторы
+
+      images.slice(0, 4).forEach(image => {
+        const indicator = document.createElement('span');
+        indicator.className = 'color-indicator';
+        indicator.style.backgroundImage = `url(${image.src})`;
+        indicator.dataset.imageUrl = image.src;
+        indicator.addEventListener('click', () => {
+          document.querySelector('.about-product-image').src = image.src;
+        });
+        indicatorContainer.appendChild(indicator);
+      });
+    }
+
+    // Навигация по товарам (вверх и вниз)
+    document.querySelector('.nav-up').addEventListener('click', () => {
+      const collection = collections[currentCollectionIndex];
+      currentProductIndex = (currentProductIndex > 0) ? currentProductIndex - 1 : (collection.products.length - 1);
+      updateProductInfo(currentCollectionIndex, currentProductIndex);
+    });
+
+    document.querySelector('.nav-down').addEventListener('click', () => {
+      const collection = collections[currentCollectionIndex];
+      currentProductIndex = (currentProductIndex < collection.products.length - 1) ? currentProductIndex + 1 : 0;
+      updateProductInfo(currentCollectionIndex, currentProductIndex);
+    });
+
+    // Инициализация начального состояния
+    updateProductInfo(0, 0);
+  });
+</script>
+
+<!-- Стили для секции -->
+<style>
+.about-products-section {
+  display: flex;
+  justify-content: space-between;
+  padding: 50px 20px;
+}
+
+.about-product-left {
+  flex: 1;
+}
+
+.about-product-right {
+  flex: 1;
+}
+
+.about-product-image-container {
+  text-align: center;
+  position: relative;
+}
+
+.about-product-image {
+  max-width: 100%;
+  height: auto;
+}
+
+.about-product-color-indicators {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.color-indicator {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.color-indicator:hover {
+  transform: scale(1.2);
+}
+</style>
+
+
+
+
+{% comment %} <div class="about-products-section">
+  <div class="about-product-content">
+    <!-- Навигация по продуктам (вверх и вниз) -->
+    <div class="about-product-navigation">
+      <button class="nav-button nav-up">&#9650;</button> <!-- Стрелка вверх -->
+      <button class="nav-button nav-down">&#9660;</button> <!-- Стрелка вниз -->
+    </div>
+
+    <!-- Информация о продукте -->
+    <div class="about-product-info">
+      <h1 class="about-product-title">The Health Project <br> Ultimate Whey Protein</h1>
+      <p class="about-product-weight">2000 g</p>
+      <p class="about-product-description">
+        Learn more about our top-selling product, which delivers unmatched quality, great taste, and excellent value.
+      </p>
+      <ul class="about-product-features">
+        <li>High-quality whey protein</li>
+        <li>Unrivaled value for money</li>
+        <li>3 delicious flavours</li>
+        <li>Mixes instantly</li>
+        <li>Great blend of high-quality proteins</li>
+      </ul>
+      <button class="buy-now-button">Buy now £24.99</button>
+    </div>
+
+    <!-- Изображение и цветовые индикаторы продукта -->
+    <div class="about-product-image-container">
+      <img width="600px" height="600px" src="{{ collection.featured_image | asset_url}}"  alt="Ultimate Whey Protein" class="about-product-image">
+       
+      <div class="about-product-color-indicators">
+        <span class="color-indicator" style="background-color: #42ABDE;"></span>
+        <span class="color-indicator" style="background-color: #E35F5E;"></span>
+        <span class="color-indicator" style="background-color: #5BB984;"></span>
+        <span class="color-indicator" style="background-color: #FFFFE0;"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Скрипт для управления переключением товаров -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const products = document.querySelectorAll('.about-product-content'); // Находим все товары
+    let currentIndex = 0; // Текущий активный товар
+    
+    // Функция для отображения только активного товара
+    function updateProductVisibility() {
+      products.forEach((product, index) => {
+        product.style.display = index === currentIndex ? 'flex' : 'none';
+      });
+    }
+
+    // Навигация по товарам (вверх)
+    document.querySelector('.nav-up').addEventListener('click', () => {
+      currentIndex = (currentIndex > 0) ? currentIndex - 1 : products.length - 1;
+      updateProductVisibility();
+    });
+
+    // Навигация по товарам (вниз)
+    document.querySelector('.nav-down').addEventListener('click', () => {
+      currentIndex = (currentIndex < products.length - 1) ? currentIndex + 1 : 0;
+      updateProductVisibility();
+    });
+
+    // Первоначальное обновление видимости
+    updateProductVisibility();
+  });
+</script>
+
+<style>
+/* Основные стили для секции */
+.about-products-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 50px 0;
+  background-color: #f9f9f9;
+}
+
+.about-product-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 80%;
+  max-width: 1200px;
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  margin-bottom: 40px;
+}
+
+.about-product-navigation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav-button {
+  background: #ffffff;
+  border: 2px solid #ddd;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s ease;
+}
+
+.nav-button:hover {
+  background: #42ABDE;
+  color: #fff;
+  border-color: #42ABDE;
+}
+
+.about-product-info {
+  flex: 1;
+}
+
+.about-product-title {
+  font-family: "Montserrat", sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: #231f20;
+  margin-bottom: 15px;
+}
+
+.about-product-weight {
+  font-family: "Karla", sans-serif;
+  font-size: 18px;
+  color: #42ABDE;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.about-product-description {
+  font-family: "Karla", sans-serif;
+  font-size: 16px;
+  line-height: 28px;
+  color: #808080;
+  margin-bottom: 30px;
+}
+
+.about-product-features {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 30px;
+}
+
+.about-product-features li {
+  font-family: "Karla", sans-serif;
+  font-size: 16px;
+  line-height: 26px;
+  color: #231f20;
+  margin-bottom: 10px;
+  position: relative;
+  padding-left: 20px;
+}
+
+.about-product-features li::before {
+  content: '✔';
+  position: absolute;
+  left: 0;
+  color: #42ABDE;
+}
+
+.buy-now-button {
+  padding: 15px 30px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: #42ABDE;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.buy-now-button:hover {
+  background-color: #359fc7;
+}
+
+.about-product-image-container {
+  flex: 1;
+  text-align: center;
+}
+
+.about-product-image {
+  max-width: 100%;
+  width: 350px;
+  height: auto;
+  margin-bottom: 30px;
+}
+
+.about-product-color-indicators {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.color-indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.color-indicator:hover {
+  transform: scale(1.2);
+}
+
+/* Стили для мобильных устройств */
+@media screen and (max-width: 768px) {
+  .about-product-content {
+    flex-direction: column;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .about-product-info {
+    margin: 0 0 20px 0;
+  }
+
+  .about-product-title {
+    font-size: 24px;
+    line-height: 32px;
+  }
+
+  .about-product-weight, .about-product-description {
+    font-size: 14px;
+  }
+
+  .buy-now-button {
+    font-size: 16px;
+    padding: 10px 20px;
+  }
+}
+</style> {% endcomment %}
