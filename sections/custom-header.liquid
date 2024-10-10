@@ -21,7 +21,8 @@
     <nav class="header__menu header__menu--desktop">
       {% if linklists[section.settings.menu].links.size > 0 %}
         {% for link in linklists[section.settings.menu].links %}
-          <a href="{{ link.url }}" class="header__menu-item">{{ link.title }}</a>
+          {% assign link_anchor = link.title | handleize %}
+          <a href="#{{ link_anchor }}" class="header__menu-item">{{ link.title }}</a>
         {% endfor %}
       {% else %}
         <p>Menu is not set up. Please create and configure the menu in the Shopify Admin</p>
@@ -30,7 +31,7 @@
 
     <!-- Универсальная кнопка -->
     {% if section.settings.show_button %}
-      <button class="header__button" src="#">{{ section.settings.button_text }}</button>
+      <a href="https://thehealthproj.myshopify.com/pages/about-page" class="header__button">{{ section.settings.button_text }}</a>
     {% endif %}
 
     <!-- Бургер-меню для мобильной версии -->
@@ -55,7 +56,7 @@
 
     <!-- Кнопка внизу мобильного меню -->
     {% if section.settings.show_button %}
-      <button class="header__button">{{ section.settings.button_text }}</button>
+      <a href="https://thehealthproj.myshopify.com/pages/about-page" class="header__button">{{ section.settings.button_text }}</a>
     {% endif %}
   </div>
 </header>
