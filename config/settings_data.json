@@ -162,7 +162,7 @@
               "slide_image": "shopify://shop_images/Creatine_caps_1_1.png",
               "slide_title": "Ultimate Creatine 251g",
               "slide_subtitle": "The Health Project1",
-              "slide_button_text": "Buy now .",
+              "slide_button_text": "Buy now 24.99$",
               "slide_button_link": "/"
             }
           },
@@ -209,8 +209,8 @@
         ],
         "settings": {
           "section_title": "Our Products",
-          "slider_speed": 3000,
-          "loop_slides": true
+          "slider_speed": 1000,
+          "loop_slides": false
         }
       },
       "custom-catalog": {
@@ -266,6 +266,13 @@
           "product_card_wGJwBX"
         ],
         "settings": {
+        }
+      },
+      "custom-about": {
+        "type": "custom-about",
+        "settings": {
+          "section_title": "Discover Our Top Products",
+          "section_subtitle": "Learn more about our best-selling products and their unique benefits."
         }
       }
     },
