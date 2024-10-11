@@ -209,12 +209,36 @@
         ],
         "settings": {
           "section_title": "Our Products",
-          "slider_speed": 3000,
-          "loop_slides": true
+          "slider_speed": 3000
         }
       },
       "custom-catalog": {
         "type": "custom-catalog",
+        "blocks": {
+          "collection_MHEMCG": {
+            "type": "collection",
+            "settings": {
+              "collection": "performance"
+            }
+          },
+          "collection_VhiQET": {
+            "type": "collection",
+            "settings": {
+              "collection": "wellbeing"
+            }
+          },
+          "collection_FbbznY": {
+            "type": "collection",
+            "settings": {
+              "collection": "plant-protein"
+            }
+          }
+        },
+        "block_order": [
+          "collection_MHEMCG",
+          "collection_VhiQET",
+          "collection_FbbznY"
+        ],
         "settings": {
           "catalog_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a nunc ultrices, feugiat augue vitae, accumsan quam."
         }
@@ -265,6 +289,11 @@
           "product_card_fGyMLB",
           "product_card_wGJwBX"
         ],
+        "settings": {
+        }
+      },
+      "custom-about": {
+        "type": "custom-about",
         "settings": {
         }
       }
