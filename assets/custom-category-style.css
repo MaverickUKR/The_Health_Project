@@ -1,0 +1,213 @@
+.category-section {
+    padding: 50px 0;
+    text-align: center;
+  }
+  
+  .category-section-header {
+    display: inline-block;
+    margin-bottom: 30px;
+  }
+  
+  .category-section-title {
+    font-family: "Montserrat", sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: #231F20;
+  }
+  
+  .category-section-subtitle {
+    font-family: "Karla", sans-serif;
+    font-size: 16px;
+    color: #808080;
+    margin-top: 10px;
+    max-width: 508px;
+  }
+  
+  .category-product-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  
+  .category-product-slider {
+    margin: 0 255px;
+    width: auto;
+  }
+  
+  .category-product-card {
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    display: grid;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+  }
+  
+  .category-product-info {
+    flex: 1;
+    margin: 0 30px;
+  }
+  
+  .category-product-title-wrapper {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .category-product-title-wrapper svg {
+    align-self: center;
+  }
+  
+  .category-product-title {
+    font-family: "Montserrat", sans-serif;
+    font-size: 40px;
+    line-height: 60px;
+    font-weight: 500;
+    color: #231F20;
+  }
+  
+  .category-product-description {
+    font-family: "Karla", sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 24px;
+    color: #808080;
+  }
+  
+  .category-product-image {
+    justify-self: center;
+  }
+  
+  .category-product-image img {
+    max-width: 100%;
+    border-radius: 5px;
+  }
+  
+  /* Стили для цветовых схем */
+  .category-product-card--blue {
+    background: #42ABDE14;
+  }
+  
+  .category-product-card--red {
+    background: #E35F5E14;
+  }
+  
+  .category-product-card--green {
+    background: #5BB98414;
+  }
+  
+  .category-product-card--yellow {
+    background: #ffffe014;
+  }
+  
+  /* Навигационные кнопки для Swiper */
+  .category-swiper-navigation {
+    display: none;
+    justify-content: center;
+    margin-top: 30px;
+  }
+  
+  .swiper-category-button:hover rect {
+    fill: #42ABDE; /* Изменение цвета круга при наведении */
+  }
+  
+  .swiper-category-button:hover path {
+    stroke: #fff; /* Изменение цвета стрелок при наведении */
+  }
+  
+  /* Стили адаптивности */
+  @media screen and (max-width: 1366px) {
+    .category-product-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin: 0 auto;
+      max-width: 1366px;
+    }
+    .category-product-slider {
+      margin: 0 63px;
+      width: auto;
+    }
+    .category-product-title {
+      font-size: 32px;
+      line-height: 48px;
+      font-weight: 600;
+    }
+    .category-product-description {
+      font-size: 15px;
+      line-height: 21px;
+    }
+    .category-product-card {
+      height: auto;
+      width: auto;
+    }
+  }
+  
+  @media screen and (max-width: 768px) {
+    .category-section {
+      overflow: hidden;
+    }
+    .category-product-grid {
+      display: inline-flex; /* Скрыть обычный grid */
+    }
+    .category-product-card {
+      display: block;
+      margin: 0 auto;
+    }
+    .category-swiper-navigation {
+      display: flex;
+    }
+  }
+  
+  @media screen and (max-width: 428px) {
+    .category-product-card {
+      display: block;
+      margin: 0 auto;
+      max-width: 385px;
+      max-height: 610px;
+    }
+    .category-swiper-navigation {
+      display: flex;
+    }
+    .category-product-slider {
+      margin: 0 22px;
+      width: auto;
+    }
+    .category-section-title {
+      font-size: 24px;
+      line-height: 36px;
+      font-weight: 500;
+    }
+    .category-section-subtitle {
+      font-size: 15px;
+      line-height: 24px;
+      font-weight: 400;
+    }
+    .category-product-info {
+      margin: 0 20px;
+    }
+    .category-product-title-wrapper {
+      align-items: center;
+    }
+    .category-product-title {
+      font-size: 18px;
+      line-height: 27px;
+    }
+    .category-product-description {
+      line-height: 24px;
+    }
+    .category-product-card {
+      height: 610px;
+      width: auto;
+    }
+    .category-product-image {
+      height: fit-content;
+    }
+    .category-product-image img {
+      height: 388px;
+      object-fit: fill;
+      position: absolute;
+      bottom: 0;
+    }
+  }
+  

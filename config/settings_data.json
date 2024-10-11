@@ -209,8 +209,8 @@
         ],
         "settings": {
           "section_title": "Our Products",
-          "slider_speed": 1000,
-          "loop_slides": false
+          "slider_speed": 3000,
+          "loop_slides": true
         }
       },
       "custom-catalog": {
@@ -265,11 +265,6 @@
           "product_card_fGyMLB",
           "product_card_wGJwBX"
         ],
-        "settings": {
-        }
-      },
-      "custom-about": {
-        "type": "custom-about",
         "settings": {
         }
       }

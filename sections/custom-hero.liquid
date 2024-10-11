@@ -95,8 +95,6 @@
 }
 {% endschema %}
 
-<link rel="stylesheet" href="{{ 'custom-hero-style.css' | asset_url }}">
-
 <div class="hero-slider" id="hero">
   <div class="swiper-container swiper-hero-container">
         <!-- Динамический фоновой текст -->
@@ -125,25 +123,25 @@
       {% for block in section.blocks %}
         {% if block.type == 'slide' %}
         <div class="swiper-slide swiper-hero-slide">
-          <div class="hero-slide-content" style="background-image: url({{ block.settings.slide_image | image_url }});">
-            <div class="hero-slide-text">
+          <div class="slide-content" style="background-image: url({{ block.settings.slide_image | image_url }});">
+            <div class="slide-text">
               <h2>{{ block.settings.slide_title | upcase }}</h2>
               <p>{{ block.settings.slide_subtitle | upcase }}</p>
               {% if block.settings.slide_button_text %}
-                <a href="{{ block.settings.slide_button_link }}" class="hero-slide-button">
+                <a href="{{ block.settings.slide_button_link }}" class="slide-button">
                   {{ block.settings.slide_button_text }}
                 </a>
               {% endif %}
             </div>
              <!-- Кнопки навигации со встроенными SVG -->
-            <div class="hero-swiper-navigation">
-              <div class="hero-swiper-button hero-swiper-button-prev">
+            <div class="custom-swiper-navigation">
+              <div class="custom-swiper-button custom-swiper-button-prev">
                 <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <circle cx="30" cy="30" r="29.5" transform="matrix(-1 0 0 1 60 0)" stroke="#DDDDDD"/>
                   <path d="M38.4853 29.9139H21.5147M21.5147 29.9139L27.1716 24.257M21.5147 29.9139L27.1716 35.5707" stroke="#42ABDE" stroke-width="1.5"/>
                 </svg>
               </div>
-              <div class="hero-swiper-button hero-swiper-button-next">
+              <div class="custom-swiper-button custom-swiper-button-next">
                 <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <circle cx="30" cy="30" r="29.5" stroke="#DDDDDD"/>
                   <path d="M21.5147 29.9139H38.4853M38.4853 29.9139L32.8284 24.257M38.4853 29.9139L32.8284 35.5707" stroke="#42ABDE" stroke-width="1.5"/>
@@ -165,54 +163,15 @@
       loopedSLides: 1,
       loop: true,
       speed: {{ section.settings.slider_speed }},
-      autoplay: {
-        delay: {{ section.settings.slider_speed }},
-        disableOnInteraction: false,
-      },
       navigation: {
-        nextEl: '.hero-swiper-button-next',
-        prevEl: '.hero-swiper-button-prev',
+        nextEl: '.custom-swiper-button-next',
+        prevEl: '.custom-swiper-button-prev',
       },
     });
   });
 </script>
 
 <style>
-  /* Динамические стили */
-  .hero-background__text--top {
-    animation: moveRight 60s linear infinite;
-    top: 0;
-    left: 0; 
-  }
-  
-  .hero-background__text--bottom {
-    animation: moveLeft 60s linear infinite;
-    top: 18%;
-    left: 0; /* Начинаем анимацию с левого края */
-  }
-  
-  /* Анимация движения вправо */
-  @keyframes moveRight {
-    0% {
-      transform: translateX(-100%);
-    }
-    100% {
-      transform: translateX(30%);
-    }
-  }
-  
-  /* Анимация движения влево */
-  @keyframes moveLeft {
-    0% {
-      transform: translateX(8%);
-    }
-    100% {
-      transform: translateX(-120%);
-    }
-  }
-  </style>
-
-{% comment %} <style>
 .hero-slider {
   position: relative;
   margin-top: 78px;
@@ -230,7 +189,7 @@
   background-position: center;
 }
 
-.hero-slide-content {
+.slide-content {
   display: block;
   align-content: center;
   color: #fff;
@@ -242,13 +201,13 @@
   background-position: center;
 }
 
-.hero-slide-text {
+.slide-text {
   position: absolute;
   left: 255px;
   top: 597px;
 }
 
-.hero-slide-content h2 {
+.slide-content h2 {
   font-family: 'Montserrat', sans-serif;
   font-weight: 500;
   font-size: 24px;
@@ -256,7 +215,7 @@
   color: #231F20;
 }
 
-.hero-slide-content p {
+.slide-content p {
   font-family: 'Karla', sans-serif;
   font-weight: 400;
   font-size: 15px;
@@ -264,7 +223,7 @@
   color: #808080;
 }
 
-.hero-slide-button {
+.slide-button {
   display: inline-block;
   padding: 15px 30px;
   background: #42ABDE;
@@ -276,7 +235,7 @@
 }
 
 /* Стили для навигационных стрелок */
-.hero-swiper-navigation {
+.custom-swiper-navigation {
   display: flex;
   position: absolute;
   top: 674px;
@@ -297,18 +256,18 @@
   }
 }
 
-.hero-swiper-button {
+.custom-swiper-button {
   background-color: transparent;
   padding: 10px; 
   cursor: pointer;
 }
 
-.hero-swiper-button svg {
+.custom-swiper-button svg {
   transition: background 0.3s ease, stroke 0.3s ease;
 }
 
 /* Применение анимации к circle в SVG */
-.hero-swiper-button svg circle {
+.custom-swiper-button svg circle {
   stroke: #DDDDDD;
   stroke-width: 1.5;
   transform-origin: 50% 50%;
@@ -316,7 +275,7 @@
   stroke-dashoffset: 186; /* Начинаем с полной длины (сделать круг пустым) */
 }
 
-.hero-swiper-button-next svg circle {
+.custom-swiper-button-next svg circle {
   stroke: #42ABDE;
   transform: rotate(-90deg);
   stroke-dasharray: 185;
@@ -324,7 +283,7 @@
   animation: draw-circle 3s linear infinite ; /* Автоматическая анимация */
 }
 
-.hero-swiper-button-prev svg circle {
+.custom-swiper-button-prev svg circle {
   stroke: #42ABDE;
   transform: rotate(90deg);
   stroke-dasharray: 185;
@@ -332,11 +291,11 @@
   animation: draw-circle 3s linear infinite; /* Автоматическая анимация */
 }
 
-.hero-swiper-button:hover circle {
+.custom-swiper-button:hover circle {
   fill: #42ABDE; /* Изменение цвета круга при наведении */
 }
 
-.hero-swiper-button:hover path {
+.custom-swiper-button:hover path {
   stroke: #fff; /* Изменение цвета стрелок при наведении */
 }
 
@@ -395,15 +354,15 @@
   .hero-slider {
     margin-top: 45px;
   }
-  .hero-slide-content {
+  .slide-content {
     width: 768px;
     height: 705px;
   }
-  .hero-slide-text {
+  .slide-text {
     left: 63px;
     top: 470px;
   }
-  .hero-swiper-navigation {
+  .custom-swiper-navigation {
     top: 603px;
     right: 63px;
   }
@@ -416,14 +375,14 @@
   .hero-slider {
     margin-top: 0;
   }
-  .hero-slide-content {
+  .slide-content {
     margin-bottom: 200px;
   }
-  .hero-slide-text {
+  .slide-text {
     left: 62px;
     top: 721px;
   }
-  .hero-swiper-navigation {
+  .custom-swiper-navigation {
     top: 861px;
   }
 }
@@ -432,16 +391,16 @@
   .hero-slider {
     margin-top: 45px;
   }
-  .hero-slide-content {
+  .slide-content {
     margin-top: 32px;
     width: 428px;
     height: 548px;
   }
-  .hero-slide-text {
+  .slide-text {
     left: 22px;
     top: 600px;
   }
-  .hero-swiper-navigation {
+  .custom-swiper-navigation {
     top: 743px;
     left: 230px;
   }
@@ -449,4 +408,4 @@
     font-size: 90px;
   }
 }
-</style> {% endcomment %}
+</style>

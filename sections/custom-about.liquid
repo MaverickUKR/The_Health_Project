@@ -28,7 +28,7 @@
             <div class="about-product-content">
               <!-- Информация о товаре -->
               <div class="about-product-info">
-                <h2 class="about-product-title">{{ product.title | capitalize}}</h2>
+                <h2 class="about-product-title">{{ product.title }}</h2>
                 <p class="about-product-weight">{{ product.weight }}</p>
                 <p class="about-product-description">{{ product.description }}</p>
                 <p class="about-product-price">{{ product.price | money }}</p>
@@ -45,7 +45,7 @@
               <!-- Изображение продукта -->
               <div class="about-product-image-container">
                 <div class="about-product-image-swiper swiper-container about-nested-swiper">
-                  <div class="swiper-wrapper swiper-about-wrapper">
+                  <div class="swiper-wrapper">
                     {% assign image_count = 0 %}
                     {% for image in product.images %}
                       {% if image_count < 4 %}
@@ -73,8 +73,8 @@
   document.addEventListener('DOMContentLoaded', function () {
     // Инициализация основного вертикального слайдера товаров
     const mainSwiper = new Swiper('.about-product-info-swiper', {
-      direction: window.innerWidth <= 768 ? 'horizontal' : 'vertical', // Вертикальное переключение по умолчанию, горизонтальное для мобильных
-      slidesPerView: 1,
+      direction: 'vertical', // Вертикальное переключение слайдов товаров
+      slidesPerView: 1, // Отображаем только один слайд
       centeredSlides: true,
       spaceBetween: 0,
       pagination: {
@@ -92,19 +92,11 @@
         },
       },
     });
-  
-    // Отслеживание изменения ширины экрана
-    window.addEventListener('resize', () => {
-      const newDirection = window.innerWidth <= 768 ? 'horizontal' : 'vertical';
-      if (mainSwiper.params.direction !== newDirection) {
-        mainSwiper.changeDirection(newDirection, false); // Изменяем направление
-      }
-    });
-  
+
     // Инициализация вложенного слайдера для изображений товара
     document.querySelectorAll('.about-nested-swiper').forEach((nestedSwiperEl) => {
       const nestedSwiper = new Swiper(nestedSwiperEl, {
-        slidesPerView: 1,
+        slidesPerView: 1, 
         centeredSlides: true,
         spaceBetween: 0,
         pagination: {
@@ -115,9 +107,9 @@
       });
     });
   });
-  
 </script>
 
+<!-- Стили для секции -->
 <style>
 .about-product-section {
   overflow: hidden;
@@ -131,8 +123,6 @@
   overflow: hidden;
   position: relative;
   margin: 0 255px;
-  justify-content: center;
-  align-items: center;
 }
 
 .about-main-navigation {
@@ -143,11 +133,14 @@ width: 50px;
 height: 520px;
 
 }
+/* Пагинация (вертикальная позиция слева) */
 .about-main-pagination {
   position: relative;
+  {% comment %} left: 255px; {% endcomment %}
 }
 .about-button-prev, .about-button-next {
 position: absolute;
+{% comment %} left: 231px; {% endcomment %}
 z-index: 1000;
 }
 
@@ -163,8 +156,10 @@ z-index: 10;
   height: 420px;
   top: 50px;
   background: #f7f6f5;
+  {% comment %} margin: 50px 0;
+  {% endcomment %}
+  {% comment %} height: 320px; {% endcomment %}
 }
-
 .swiper-pagination-bullet {
 color: red;
 background-color: green;
@@ -176,9 +171,7 @@ background-color: green;
 
 .about-product-slide {
   display: flex;
-  margin: 0 0 0 125px;
-  {% comment %} flex-shrink: 1; {% endcomment %}
-  overflow: hidden;
+  margin: 0 125px;
 }
 
 /* Контент продукта */
@@ -190,7 +183,6 @@ background-color: green;
 
 .about-product-info {
   width: 480px;
-  padding-right: 73px;
 }
 
 .about-product-title {
@@ -253,16 +245,15 @@ background-color: green;
 /* Изображение продукта */
 .about-product-image-container {
   text-align: center;
-  width: 660px;
+  width: 100%;
   position: relative;
-  overflow: hidden;
 }
 
 .about-product-image-swiper {
   margin: 0 auto;
 }
 .about-product-nested-slide {
-  {% comment %} width: 600px; {% endcomment %}
+  width: fit-content;
 }
 .about-product-nested-slide img {
   border-radius: 10px;
@@ -272,9 +263,7 @@ background-color: green;
   background-color: #F8F8F8;
   padding: 100px 30px;
 }
-.swiper-about-wrapper .swiper-slider {
-  {% comment %} width: 660px; {% endcomment %}
-}
+
 .about-product-nested-slide img:hover {
   transform: scale(1.05);
 }
@@ -324,14 +313,9 @@ background-color: green;
     margin: 0 63px;
   }
   .about-product-nested-slide img {
-    padding: 110px 50px;
+    padding: 110px 30px;
     {% comment %} margin-bottom: 30px; {% endcomment %}
-    width: 70%;
-  }
-  .about-product-info {
-  margin-left: 63px;
-  width: 30%;
-  padding: 0;
+    width: 80%;
   }
   .about-nested-pagination {
   bottom: 40px;
@@ -341,116 +325,44 @@ background-color: green;
   line-height: 48px;
   }
 }
-
 @media screen and (max-width: 768px) {
-
-  .about-product-container {
-  position: relative;
-  align-items: stretch;
-  height: 1279px;
-  width: 100%;
-  }
   .about-product-info-swiper {
-
+  height: 1279px;
   }
   .about-product-slide {
   margin: 0;
-  }
-  .about-product-image-swiper {
-  {% comment %} {% comment %} position: absolute;
-  bottom: 0;
-  height: 500px;
-  width: 645px; {% endcomment %} {% endcomment %}
   }
   .about-product-nested-slide img {
     grid-area: img;
     max-width: 90%; /* Ограничение размера изображения */
     margin: 0 auto; /* Центрирование изображения */
-    position: relative;
-    top: 60px;
   }
   .about-product-title {
   grid-area: title;
   text-align: center; 
   position: absolute;
-  top: -688px;
-  left: 100px;
   }
   .about-product-description {
   grid-area: description;
   text-align: center;
-  {% comment %} position: absolute; {% endcomment %}
+  position: absolute;
   }
+
 
   .about-product-content {
   display: grid;
   grid-template-areas: 
+      "title"
       "img"
-      "description"
-      "nav";
+      "description";
   grid-template-rows: auto auto auto;
   gap: 20px; /* Отступы между блоками */
-  justify-items: center;        position: relative;
-  top: 60px;
-  }
-  .about-product-info {
-  width: 85%;
-  margin: 0 63px;
-  position: absolute;
-  top: 650px;
+  justify-items: center;
   }
   /* Центрирование и выравнивание по вертикали для кнопки */
   .about-buy-now-btn {
     width: fit-content;
     margin: 20px auto;
-  }
-  .about-product-info-swiper {
-    height: auto; /* Устанавливаем высоту на автоматическую */
-  }
-
-  .about-product-container {
-    flex-direction: column; /* Переход на вертикальное расположение контейнера */
-  }
-
-  .about-main-navigation {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    top: 1000px;
-    position: absolute;
-    width: 100%; /* Растягиваем навигацию на всю ширину */
-    height: auto; /* Устанавливаем автоматическую высоту */
-    margin: 20px 0; /* Отступы сверху и снизу */
-    grid-area: nav;
-    top: 1050px
-    left: -8px;
-  }
-
-  .about-button-prev, .about-button-next {
-    position: static; /* Отменяем абсолютное позиционирование */
-    margin: 0 10px; /* Отступы между кнопками */
-    transform: rotate(-90deg);
-  }
-
-  .about-main-pagination {
-    display: block;
-    width: 60%; /* Ограничиваем ширину прогрессбара */
-    height: 5px; /* Устанавливаем высоту прогрессбара */
-    background: #f7f6f5;
-  }
-
-  /* Стили для кнопок */
-  .about-button-prev svg, .about-button-next svg {
-    width: 40px;
-    height: 40px;
-  }
-  .about-buy-now-button {
-    width: 100%;
-    margin: 10px auto;
-    text-align: center;
-  }
-}
-  @media screen and (max-width: 428px) {
   }
 }
 </style>
