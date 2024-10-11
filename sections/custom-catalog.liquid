@@ -36,26 +36,24 @@
 
 
 <div class="collection-section" id="catalog">
-    <div class="collection-wrapper">
-      <!-- Ссылки на коллекции -->
-      <div class="collection-links">
-        {% if section.blocks.size > 0 %}
-          {% for block in section.blocks %}
-            {% if block.type == 'collection' %}
-              <a href="#" class="collection-link {% if forloop.first %}active{% endif %}" data-handle="{{ block.settings.collection.handle }}">
-                {{ block.settings.collection.title }} <sup class="catalog-product-count">{{ block.settings.collection.products_count }}</sup>
-              </a>
-            {% endif %}
-          {% endfor %}
-        {% else %}
-          {% for collection in collections %}
-            <a href="#" class="collection-link {% if forloop.first %}active{% endif %}" data-handle="{{ collection.handle }}">
-              {{ collection.title }} <sup class="catalog-product-count">{{ collection.products_count }}</sup>
+  <div class="collection-wrapper">
+    <!-- Ссылки на коллекции -->
+    <div class="collection-links">
+      {% if section.blocks.size > 0 %}
+        {% for block in section.blocks %}
+          {% if block.type == 'collection' %}
+            <a href="{% if block.settings.collection %}/collections/{{ block.settings.collection.handle }}{% else %}{{ shopify_admin_path }}/collections{% endif %}" 
+               class="collection-link {% if forloop.first %}active{% endif %}"
+               data-handle="{{ block.settings.collection.handle }}">
+              {{ block.settings.collection.title }} <sup class="catalog-product-count">{{ block.settings.collection.products_count }}</sup>
             </a>
-          {% endfor %}
-        {% endif %}
-      </div>
+          {% endif %}
+        {% endfor %}
+      {% else %}
+        <p>No collections are available. Please add some collections in your Shopify admin panel.</p>
+      {% endif %}
     </div>
+  </div>
 
     <div class="catalog-body-text-wrapper">
     <p class="catalog-body-text">{{ section.settings.catalog_text }}</p>
