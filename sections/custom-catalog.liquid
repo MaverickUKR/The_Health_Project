@@ -141,7 +141,7 @@
           const selectedCollection = this.dataset.handle;
   
           // Обновляем видимость продуктов
-          document.querySelectorAll('.swiper-slide.product-item').forEach(product => {
+          document.querySelectorAll('.catalog-product-item').forEach(product => {
             product.style.display = (product.dataset.collection === selectedCollection) ? 'block' : 'none';
           });
   
