@@ -48,11 +48,6 @@
           "default": "The Health Project"
         },
         {
-          "type": "product",
-          "id": "slide_product",
-          "label": "Select Product"
-        },
-        {
           "type": "text",
           "id": "slide_button_text",
           "label": "Button Text",
@@ -65,7 +60,7 @@
           "default": "/"
         }
       ]
-    },    
+    },
     {
       "type": "text_line_top",
       "name": "Top Background Text",
@@ -134,12 +129,8 @@
             <div class="hero-slide-text">
               <h2>{{ block.settings.slide_title | upcase }}</h2>
               <p>{{ block.settings.slide_subtitle | upcase }}</p>
-              {% if block.settings.slide_product != blank %}
-                <a href="{{ block.settings.slide_product | asset_url }}" class="hero-slide-button">
-                  {{ block.settings.slide_button_text }}
-                </a>
-              {% else %}
-                <a href="/" class="hero-slide-button">
+              {% if block.settings.slide_button_text %}
+                <a href="{{ block.settings.slide_button_link }}" class="hero-slide-button">
                   {{ block.settings.slide_button_text }}
                 </a>
               {% endif %}
@@ -190,10 +181,14 @@
   /* Динамические стили */
   .hero-background__text--top {
     animation: moveRight 60s linear infinite;
+    top: 0;
+    left: 0; 
   }
   
   .hero-background__text--bottom {
     animation: moveLeft 60s linear infinite;
+    top: 18%;
+    left: 0; /* Начинаем анимацию с левого края */
   }
   
   /* Анимация движения вправо */
