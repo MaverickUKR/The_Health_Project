@@ -1,12 +1,12 @@
 /*
-* ------------------------------------------------------------
-* IMPORTANT: The contents of this file are auto-generated.
-*
-* This file may be updated by the Shopify admin theme editor
-* or related systems. Please exercise caution as any changes
-* made to this file may be overwritten.
-* ------------------------------------------------------------
-*/
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "current": {
     "logo_width": 90,
@@ -162,7 +162,7 @@
               "slide_image": "shopify://shop_images/Creatine_caps_1_1.png",
               "slide_title": "Ultimate Creatine 251g",
               "slide_subtitle": "The Health Project1",
-              "slide_button_text": "Buy now .",
+              "slide_button_text": "Buy now 24.99$",
               "slide_button_link": "/"
             }
           },
@@ -182,7 +182,7 @@
               "slide_image": "shopify://shop_images/Creatine_caps_1_1.png",
               "slide_title": "Ultimate Creatine 253g",
               "slide_subtitle": "The Health Project3",
-              "slide_button_text": "Buy now ...",
+              "slide_button_text": "Buy now $24.99",
               "slide_button_link": "/"
             }
           },
@@ -209,8 +209,8 @@
         ],
         "settings": {
           "section_title": "Our Products",
-          "slider_speed": 3000,
-          "loop_slides": true
+          "slider_speed": 1000,
+          "loop_slides": false
         }
       },
       "custom-catalog": {
@@ -265,6 +265,11 @@
           "product_card_fGyMLB",
           "product_card_wGJwBX"
         ],
+        "settings": {
+        }
+      },
+      "custom-about": {
+        "type": "custom-about",
         "settings": {
         }
       }
